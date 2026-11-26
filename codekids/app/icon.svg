@@ -1,0 +1,8 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b1394"/><stop offset="1" stop-color="#0b0617"/></linearGradient><radialGradient id="gl" cx=".5" cy=".38" r=".55"><stop offset="0" stop-color="#f472b6" stop-opacity=".45"/><stop offset="1" stop-color="#f472b6" stop-opacity="0"/></radialGradient><linearGradient id="pg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#fb923c"/></linearGradient><linearGradient id="pg2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#f472b6"/></linearGradient><linearGradient id="sp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fbbf24"/></linearGradient></defs><rect width='512' height='512' rx='112' fill='url(#bg)'/><rect width='512' height='512' rx='112' fill='url(#gl)'/><g>
+<path d="M256 176 L256 392 Q200 360 118 372 L118 156 Q200 144 256 176Z" fill="url(#pg1)"/>
+<path d="M256 176 L256 392 Q312 360 394 372 L394 156 Q312 144 256 176Z" fill="url(#pg2)"/>
+<path d="M214 232 L172 266 L214 300" fill="none" stroke="#1a0b45" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M298 232 L340 266 L298 300" fill="none" stroke="#1a0b45" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M256 62 L272 112 L322 128 L272 144 L256 194 L240 144 L190 128 L240 112Z" fill="url(#sp)"/>
+<circle cx="352" cy="86" r="9" fill="#fbbf24"/><circle cx="168" cy="96" r="6" fill="#f472b6"/>
+</g></svg>
