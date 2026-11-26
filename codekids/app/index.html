@@ -88,8 +88,9 @@ const norm=c=>'ck1:'+c.trim().toUpperCase().replace(/\s+/g,'');
 let fresh=false;
 const locked=()=>false;
 async function getJSON(f){const r=await fetch(API+f+'?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;return r.json()}
-function mergeContent(c){if(c.enc)ENC=c.enc;const keep=TRACKS.filter(t=>ENC.some(e=>e.id===t.id));TRACKS.splice(0,TRACKS.length,...c.tracks,...keep);recount()}
-async function syncContent(){try{const c=await getJSON('content.json');if(c&&c.tracks&&c.v>=BV){const old=localStorage.getItem('ckcont');const n=JSON.stringify(c);if(old!==n){localStorage.setItem('ckcont',n);mergeContent(c);toast('تم تحديث المحتوى');if(!$('#ed')&&!$('#qz'))home()}}}catch(e){}}
+function mergeContent(c){if(c.enc)ENC=c.enc;const keep=TRACKS.filter(t=>ENC.some(e=>e.id===t.id));TRACKS.splice(0,TRACKS.length,...c.tracks,...keep);TRACKS.forEach(t=>{if(t.f){try{const x=JSON.parse(localStorage.getItem('ckL_'+t.id)||'null');if(x&&x.L&&x.L.length)t.L=x.L}catch(e){}}});recount()}
+async function syncParts(){let ch=0;for(const t of TRACKS.filter(t=>t.f)){try{const x=await getJSON('content/'+t.id+'.json');if(x&&x.L&&x.L.length){const n=JSON.stringify(x);if(localStorage.getItem('ckL_'+t.id)!==n){localStorage.setItem('ckL_'+t.id,n);t.L=x.L;ch=1}}}catch(e){}}if(ch){recount();toast('تم تحديث المحتوى');if(!$('#ed')&&!$('#qz'))home()}}
+async function syncContent(){try{const c=await getJSON('content.json');if(c&&c.tracks&&c.v>=BV){const old=localStorage.getItem('ckcont');const n=JSON.stringify(c);if(old!==n){localStorage.setItem('ckcont',n);mergeContent(c);toast('تم تحديث المحتوى');if(!$('#ed')&&!$('#qz'))home()}}}catch(e){}syncParts()}
 try{const c=JSON.parse(localStorage.getItem('ckcont')||'null');if(c&&c.v>=BV)mergeContent(c)}catch(e){}
 
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -171,7 +172,7 @@ const ck=await crypto.subtle.importKey('raw',K,'AES-GCM',false,['decrypt']);
 const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(f.i)},ck,b64(f.d));const P=JSON.parse(new TextDecoder().decode(pt));
 const i=TRACKS.findIndex(t=>t.id===id);const tr={id,t:e.t,e:e.e,c:e.c,d:e.d+' · مفتوحة',lang:null,full:true,v:P.v||[],L:P.L};if(i>=0)TRACKS[i]=tr;else TRACKS.push(tr);recount();S.cc[id]=code;save();
 if(ui){toast('تم فتح الدورة 🎉');boom();setTimeout(()=>track(id),700)}}
-catch(x){if(live&&S.cc[id]){delete S.cc[id];save();const i=TRACKS.findIndex(t=>t.id===id);if(i>=0)TRACKS.splice(i,1);recount();toast('انتهى هذا الكود')}if(ui)toast(live||f?'الكود غير صحيح':'تأكد من الإنترنت')}}
+catch(x){if(live&&S.cc[id]===code){delete S.cc[id];save();const i=TRACKS.findIndex(t=>t.id===id);if(i>=0)TRACKS.splice(i,1);recount();toast('انتهى هذا الكود')}if(ui)toast(live||f?'الكود غير صحيح':'تأكد من الإنترنت')}}
 function me(){nav('me');let h='<h2>حسابي</h2>';
 if(S.user){h+=`<div class="box" style="text-align:center">${S.user.picture?'<img src="'+esc(S.user.picture)+'" style="width:72px;height:72px;border-radius:50%">':'<div style="font-size:48px">👤</div>'}<h3 style="font-size:20px">${esc(S.user.name||'')}</h3><div class="small">${esc(S.user.email||'')}</div><button class="btn s" onclick="logout()">تسجيل الخروج</button></div>`}
 else h+=`<div class="box"><p>سجّل الدخول بحساب جوجل لحفظ اسمك وتقدمك على هذا الجهاز.</p><button class="g-btn" onclick="glogin()"><svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.5 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.5-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.100 0 24s.9 7.600 2.600 10.800l7.900-6.100z"/><path fill="#34A853" d="M24 48c6.500 0 11.900-2.100 15.900-5.800l-7.500-5.800c-2.100 1.400-4.800 2.300-8.400 2.300-6.300 0-11.600-4-13.500-9.800l-7.900 6.100C6.500 42.600 14.600 48 24 48z"/></svg>تسجيل الدخول بجوجل</button><p class="small" id="gmsg"></p></div>`;
