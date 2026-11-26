@@ -24,3 +24,4 @@ rn(document.body);
 new MutationObserver(function(){rn(document.body)}).observe(document.body,{childList:true,subtree:true,characterData:true});
 if(document.querySelector('#n_home.on'))try{home()}catch(e){}
 })();
+/*CKEND*/
