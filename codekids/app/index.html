@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0b0617"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><title>كود كيدز</title>
+<style>
+:root{--bg:#0b0617;--s:#150d2b;--s2:#1d1340;--b:#2c2057;--t:#f5f1ff;--m:#a79fc7;--a:#f472b6;--a2:#fb923c;--g:#34d399;--y:#fbbf24}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--t);font-family:system-ui,"Noto Sans Arabic",Tahoma,sans-serif;padding-bottom:84px;line-height:1.7}
+.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#0b0617ee;backdrop-filter:blur(8px);border-bottom:1px solid var(--b)}
+.logo{display:flex;align-items:center;gap:10px}.logo svg{flex:none;border-radius:11px}.logo i{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--a),var(--a2));display:grid;place-items:center;font-style:normal;font-weight:800;color:#fff;font-size:14px;direction:ltr}
+.logo b{display:block;font-size:17px;line-height:1.1}.logo small{color:var(--m);font-size:11px}
+.lb{border:1px solid var(--b);background:var(--s);color:var(--t);border-radius:14px;padding:8px 12px;font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px}
+.lb img{width:24px;height:24px;border-radius:50%}
+main{padding:16px}
+.pill{display:inline-block;border:1px solid #f472b655;background:#f472b61a;color:#f9a8d4;border-radius:12px;padding:5px 12px;font-size:12px;margin-bottom:12px;direction:ltr}
+h1.hero{font-size:34px;line-height:1.25;margin:6px 0 10px}.hl{background:linear-gradient(90deg,var(--a),var(--a2),var(--y));-webkit-background-clip:text;color:transparent}
+.sub{color:var(--m);margin:0 0 16px}
+.row{display:flex;gap:10px;align-items:center;margin-bottom:18px}
+.cta{flex:1;border:0;border-radius:16px;padding:15px;background:linear-gradient(90deg,var(--a),var(--a2));color:#fff;font-size:17px;font-weight:800;box-shadow:0 8px 24px #f472b64d}
+.cta:active{transform:scale(.97)}
+.prog{border:1px solid var(--b);background:var(--s);border-radius:16px;padding:10px 12px;font-size:13px;color:var(--m);direction:ltr;display:flex;gap:8px;align-items:center}.prog span{display:block;width:50px;height:6px;background:var(--b);border-radius:4px;overflow:hidden}.prog span i{display:block;height:100%;background:var(--a)}
+.code{direction:ltr;text-align:left;background:var(--s);border:1px solid var(--b);border-radius:20px;overflow:hidden;box-shadow:0 0 60px #f472b61f;margin-bottom:22px}
+.code .bar{display:flex;gap:6px;padding:10px 14px;border-bottom:1px solid var(--b);color:var(--m);font:12px monospace;justify-content:space-between}
+.code .dots i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+.code pre{margin:0;padding:14px;font:13px/1.8 monospace;color:#e9ddff;min-height:190px;white-space:pre-wrap}
+.cur{display:inline-block;width:8px;height:15px;background:var(--a);vertical-align:middle;animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}
+h2{font-size:20px;margin:6px 0 4px}.sec{color:var(--m);margin:0 0 14px;font-size:14px}
+.tr{display:flex;gap:12px;align-items:center;background:var(--s);border:1px solid var(--b);border-radius:20px;padding:14px;margin-bottom:12px;cursor:pointer}
+.tr:active{transform:scale(.98)}
+.ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:26px;flex:none}
+.tr b{font-size:17px}.tr small{display:block;color:var(--m);font-size:12px}
+.mini{height:5px;background:var(--b);border-radius:4px;margin-top:6px;overflow:hidden}.mini i{display:block;height:100%}
+.back{background:none;border:0;color:var(--a);font-size:15px;font-weight:700;padding:4px 0 10px}
+.li{display:flex;gap:12px;align-items:center;background:var(--s);border:1px solid var(--b);border-radius:18px;padding:13px;margin-bottom:10px;cursor:pointer}
+.n{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:800;flex:none;color:#fff}
+.tabs{display:flex;gap:6px;overflow:auto;margin:8px 0 12px;padding-bottom:4px}
+.tab{flex:none;border:1px solid var(--b);background:var(--s);color:var(--m);border-radius:14px;padding:8px 14px;font-size:14px;font-weight:700}
+.tab.on{background:linear-gradient(90deg,var(--a),var(--a2));color:#fff;border-color:transparent}
+.box{background:var(--s);border:1px solid var(--b);border-radius:20px;padding:16px;margin-bottom:12px}
+.box h3{margin:0 0 6px;font-size:17px;color:#f9a8d4}.box p{margin:0 0 8px}
+pre.c{direction:ltr;text-align:left;background:#0e0820;border:1px solid var(--b);color:#c9f7e1;padding:12px;border-radius:14px;overflow:auto;font:13px/1.6 monospace;margin:8px 0;white-space:pre}
+.tip{background:#fbbf2418;border:1px solid #fbbf2455;border-radius:16px;padding:12px;color:#fde68a}
+.vid{position:relative;padding-top:56.25%;border-radius:18px;overflow:hidden;background:#000;margin-bottom:10px}.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.chip{display:inline-block;border:1px solid var(--b);background:var(--s2);color:var(--t);border-radius:14px;padding:7px 12px;font-size:13px;margin:0 0 8px 8px}.chip.on{border-color:var(--a);background:#f472b622}
+.btn{border:0;border-radius:14px;padding:11px 18px;font-size:15px;font-weight:800;color:#fff;background:linear-gradient(90deg,var(--a),var(--a2));margin:6px 0 0 8px}
+.btn.s{background:var(--s2);border:1px solid var(--b)}.btn.g{background:#059669}
+textarea{direction:ltr;text-align:left;width:100%;min-height:150px;background:#0e0820;color:#e9ddff;border:1px solid var(--b);border-radius:14px;padding:10px;font:13px/1.6 monospace}
+.out{direction:ltr;text-align:left;background:#0e0820;border:1px dashed var(--b);border-radius:14px;padding:10px;min-height:44px;margin-top:10px;white-space:pre-wrap;font:13px monospace;color:#c9f7e1}
+iframe.pv{width:100%;height:200px;border:1px dashed var(--b);border-radius:14px;background:#fff;margin-top:10px}
+.opt{display:block;width:100%;text-align:right;background:var(--s2);border:2px solid var(--b);border-radius:14px;padding:13px;margin:8px 0;font-size:15px;color:var(--t);font-weight:600}
+.opt.ok{background:#05966933;border-color:var(--g);animation:pop .4s}.opt.no{background:#dc262633;border-color:#f87171;animation:sh .4s}
+@keyframes pop{50%{transform:scale(1.04)}}@keyframes sh{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.hw{display:flex;gap:10px;align-items:center;font-size:16px}.hw input{width:26px;height:26px;accent-color:var(--g)}
+.nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:10px 12px 14px;background:#0b0617f5;border-top:1px solid var(--b);z-index:6}
+.nav button{background:none;border:0;color:var(--m);font-size:12px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 18px;border-radius:16px}
+.nav button span{font-size:20px}.nav button.on{background:#f472b620;color:#f9a8d4}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}.st{background:var(--s);border:1px solid var(--b);border-radius:18px;padding:12px;text-align:center}.st b{font-size:22px;display:block}.st small{color:var(--m)}
+canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:9}
+.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:var(--s2);border:1px solid var(--a);padding:10px 18px;border-radius:24px;font-weight:700;z-index:10;opacity:0;transition:.3s;pointer-events:none;text-align:center;max-width:90%}.toast.s{opacity:1}
+.g-btn{width:100%;background:#fff;color:#222;border:0;border-radius:14px;padding:13px;font-size:16px;font-weight:800;display:flex;gap:10px;justify-content:center;align-items:center}
+.small{color:var(--m);font-size:13px}
+.mod{margin:16px 0 6px;padding:6px 12px;border-radius:10px;background:#f472b61a;border:1px solid #f472b655;color:#f9a8d4;font-weight:700;font-size:13px}</style></head><body>
+<canvas id="cf"></canvas><div class="toast" id="toast"></div>
+<div class="top"><div class="logo"><svg width='40' height='40' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b1394"/><stop offset="1" stop-color="#0b0617"/></linearGradient><radialGradient id="gl" cx=".5" cy=".38" r=".55"><stop offset="0" stop-color="#f472b6" stop-opacity=".45"/><stop offset="1" stop-color="#f472b6" stop-opacity="0"/></radialGradient><linearGradient id="pg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#fb923c"/></linearGradient><linearGradient id="pg2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#f472b6"/></linearGradient><linearGradient id="sp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fbbf24"/></linearGradient></defs><rect width='512' height='512' rx='112' fill='url(#bg)'/><rect width='512' height='512' rx='112' fill='url(#gl)'/><g>
+<path d="M256 176 L256 392 Q200 360 118 372 L118 156 Q200 144 256 176Z" fill="url(#pg1)"/>
+<path d="M256 176 L256 392 Q312 360 394 372 L394 156 Q312 144 256 176Z" fill="url(#pg2)"/>
+<path d="M214 232 L172 266 L214 300" fill="none" stroke="#1a0b45" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M298 232 L340 266 L298 300" fill="none" stroke="#1a0b45" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M256 62 L272 112 L322 128 L272 144 L256 194 L240 144 L190 128 L240 112Z" fill="url(#sp)"/>
+<circle cx="352" cy="86" r="9" fill="#fbbf24"/><circle cx="168" cy="96" r="6" fill="#f472b6"/>
+</g></svg>
+<div><b>كود كيدز</b><small>تعلّم البرمجة بالعربي</small></div></div><button class="lb" id="lb" onclick="tab('me')">دخول</button></div>
+<main id="app"></main>
+<div class="nav"><button id="n_home" onclick="tab('home')"><span>🏠</span>المسار</button><button id="n_prog" onclick="tab('prog')"><span>📈</span>تقدّمي</button><button id="n_me" onclick="tab('me')"><span>👤</span>حسابي</button></div>
+<script src="d0.js"></script><script src="d1.js"></script><script src="d2.js"></script><script src="d3.js"></script><script src="d5.js"></script><script src="d6.js"></script><script src="enc-bundle.js"></script>
+<script>
+const S=Object.assign({xp:0,done:{},q:{},hw:{},streak:0,last:'',user:null,cc:{}},JSON.parse(localStorage.getItem('ck2')||'{}'));
+const save=()=>localStorage.setItem('ck2',JSON.stringify(S));
+const $=s=>document.querySelector(s),app=$('#app');
+let ENC=[{id:'cyber',t:'الأمن السيبراني',e:'🛡️',c:'#38bdf8',d:'دفاعي وتعليمي',lock:'🔒 مقفلة بكود خاص'}];
+const BV=1;
+{const o=['pre','py'];TRACKS.sort((a,b)=>{const x=o.indexOf(a.id),y=o.indexOf(b.id);return (x<0?99:x)-(y<0?99:y)})}
+let TOTAL=0;const recount=()=>{TOTAL=TRACKS.reduce((a,t)=>a+t.L.length,0)};recount();
+const API='https://bodimhefni2010-png.github.io/codekids/';
+const WA='201287726193';
+const FREE=id=>id==='py'?3:2;
+const sha=async x=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(x)))].map(b=>b.toString(16).padStart(2,'0')).join('');
+const norm=c=>'ck1:'+c.trim().toUpperCase().replace(/\s+/g,'');
+let fresh=false;
+const locked=()=>false;
+async function getJSON(f){const r=await fetch(API+f+'?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;return r.json()}
+function mergeContent(c){if(c.enc)ENC=c.enc;const keep=TRACKS.filter(t=>ENC.some(e=>e.id===t.id));TRACKS.splice(0,TRACKS.length,...c.tracks,...keep);recount()}
+async function syncContent(){try{const c=await getJSON('content.json');if(c&&c.tracks&&c.v>=BV){const old=localStorage.getItem('ckcont');const n=JSON.stringify(c);if(old!==n){localStorage.setItem('ckcont',n);mergeContent(c);toast('تم تحديث المحتوى');if(!$('#ed')&&!$('#qz'))home()}}}catch(e){}}
+try{const c=JSON.parse(localStorage.getItem('ckcont')||'null');if(c&&c.v>=BV)mergeContent(c)}catch(e){}
+
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const key=(t,i)=>t+':'+i;
+const doneCount=t=>TRACKS.find(x=>x.id===t).L.filter((_,i)=>S.done[key(t,i)]).length;
+const totalDone=()=>TRACKS.reduce((a,t)=>a+doneCount(t.id),0);
+function streak(){const d=new Date().toDateString();if(S.last!==d){const y=new Date(Date.now()-864e5).toDateString();S.streak=S.last===y?S.streak+1:1;S.last=d;save()}}
+function toast(m){const t=$('#toast');t.textContent=m;t.className='toast s';clearTimeout(toast.h);toast.h=setTimeout(()=>t.className='toast',2200)}
+function add(n,m){S.xp+=n;save();toast(m||('+'+n+' نقطة'))}
+function topbar(){const b=$('#lb');b.innerHTML=S.user?((S.user.picture?'<img src="'+esc(S.user.picture)+'">':'')+esc((S.user.name||'حسابي').split(' ')[0])):'🔑 دخول'}
+function nav(k){['home','prog','me'].forEach(x=>$('#n_'+x).className=x===k?'on':'')}
+function tab(k){nav(k);scrollTo(0,0);k==='home'?home():k==='prog'?progress():me()}
+const SNIP=['// رحلتك تبدأ من هنا','const course = "Code Kids";','let lesson = 1;','','while (lesson <= '+TOTAL+') {','  learn(lesson);','  lesson++;','}','','console.log("ready ✓");'];
+let typing=0;
+function type(){const el=$('#ty');if(!el)return;const txt=SNIP.join('\n');let i=0;const my=++typing;(function f(){if(my!==typing||!$('#ty'))return;i=Math.min(txt.length,i+2);$('#ty').textContent=txt.slice(0,i);if(i<txt.length)setTimeout(f,30)})()}
+function nextLesson(){for(const t of TRACKS)for(let i=0;i<t.L.length;i++)if(!S.done[key(t.id,i)])return [t.id,i];return [TRACKS[0].id,0]}
+function home(){nav('home');const nl=nextLesson();
+let h=`<span class="pill">&gt;_ مسار تعليمي · ${TOTAL} درسا · ${TRACKS.length} لغة · بالعربية</span>
+<h1 class="hero">تعلّم <span class="hl">البرمجة</span><br>بخطوات واضحة</h1>
+<p class="sub">شرح عربي مفصل وكود إنجليزي، مع فيديوهات من أفضل المدرسين العرب، وتجربة كود واختبارات وواجبات.</p>
+<div class="row"><button class="cta" onclick="lesson('${nl[0]}',${nl[1]})">▶ ${totalDone()?'كمّل من حيث وقفت':'ابدأ الدرس الأول'}</button><div class="prog">${totalDone()}/${TOTAL}<span><i style="width:${totalDone()/TOTAL*100}%"></i></span></div></div>
+<div class="code"><div class="bar"><span class="dots"><i style="background:#f87171"></i><i style="background:#fbbf24"></i><i style="background:#34d399"></i></span><span>my-first-code.js</span></div><pre><span id="ty"></span><span class="cur"></span></pre></div>
+<h2>اختر لغتك</h2><p class="sec">كل لغة فيها دروس مفصلة وفيديوهات من أكثر من مدرس.</p>`;
+TRACKS.forEach(t=>{const p=Math.round(doneCount(t.id)/t.L.length*100);h+=`<div class="tr" onclick="track('${t.id}')"><div class="ic" style="background:${t.c}22;border:1px solid ${t.c}66">${t.e}</div><div style="flex:1"><b>${t.t}</b><small>${t.d} · ${t.L.length} دروس · ${t.v.length} فيديو</small><div class="mini"><i style="width:${p}%;background:${t.c}"></i></div></div></div>`});
+ENC.forEach(e=>{if(!TRACKS.some(t=>t.id===e.id))h+=`<div class="tr" onclick="courseLock('${e.id}')"><div class="ic" style="background:${e.c}22;border:1px solid ${e.c}66">${e.e}</div><div style="flex:1"><b>${e.t} 🔒</b><small>${e.d} · ${e.lock}</small></div></div>`});
+h+=`<p class="small" style="text-align:center;margin-top:20px">© كود كيدز · عبدالرحمن محمود ومحمد عمرو</p>`;app.innerHTML=h;type()}
+function track(id,sub){nav('home');sub=sub||'l';const t=TRACKS.find(x=>x.id===id);
+let h=`<button class="back" onclick="home()">→ كل اللغات</button><div class="tr" style="cursor:default"><div class="ic" style="background:${t.c}22;border:1px solid ${t.c}66">${t.e}</div><div><b>${t.t}</b><small>${t.d}</small></div></div>${t.full?'':'<div class="tip">🚧 هذه اللغة يتم توسيعها إلى منهج كامل من الصفر للاحتراف، وستصلك الدروس الجديدة تلقائيا.</div>'}
+<div class="tabs"><button class="tab ${sub==='l'?'on':''}" onclick="track('${id}','l')">📚 الدروس</button>${t.v.length?`<button class="tab ${sub==='v'?'on':''}" onclick="track('${id}','v')">🎬 الفيديوهات (${t.v.length})</button>`:''}</div>`;
+if(sub==='l')t.L.forEach((l,i)=>{const d=S.done[key(id,i)];if(l.m&&(i===0||t.L[i-1].m!==l.m))h+=`<div class="mod">${l.m}</div>`;const lk=locked(id,i);h+=`<div class="li" onclick="lesson('${id}',${i})"><div class="n" style="background:${lk?'#3b3068':d?'#059669':t.c}">${lk?'🔒':d?'✓':i+1}</div><div><b>${esc(l.t)}</b><div class="small">${l.s.length} أقسام · ${l.q.length} أسئلة · واجب</div></div></div>`});
+else h+='<div id="vbox">'+vids(t,0)+'</div>';
+app.innerHTML=h;scrollTo(0,0)}
+function vids(t,k,lt){const v=t.v[k];const q=encodeURIComponent((lt?lt+' ':'')+t.t+' tutorial');
+return `<div class="vid"><iframe src="https://www.youtube.com/embed/videoseries?list=${v.id}" allowfullscreen allow="encrypted-media;picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+<div class="box"><b>${esc(v.t)}</b><div class="small">القناة: ${esc(v.by)} · ${v.lang==='ar'?'بالعربية':'بالإنجليزية'}</div><div style="margin-top:8px">${t.v.map((x,j)=>`<button class="chip ${j===k?'on':''}" onclick="swap('${t.id}',${j},${lt?JSON.stringify(lt).replace(/"/g,'&quot;'):'null'})">${esc(x.by)}</button>`).join('')}</div>
+<button class="btn s" onclick="location.href='https://www.youtube.com/playlist?list=${v.id}'">افتح القائمة في يوتيوب ▶</button><button class="btn s" onclick="location.href='https://www.youtube.com/results?search_query=${q}'">🔎 دروس أخرى عن الموضوع</button></div>
+<p class="small">الفيديوهات تُعرض بمشغّل يوتيوب الرسمي، وحقوقها لأصحاب القنوات.</p>`}
+function swap(id,k,lt){const t=TRACKS.find(x=>x.id===id);const box=$('#vbox');box.innerHTML=vids(t,k,lt)}
+function lesson(id,i,tb){tb=tb||'e';const t=TRACKS.find(x=>x.id===id),l=t.L[i];nav('home');
+const tabs=[['e','📖 الشرح'],...(t.v.length?[['v','🎬 فيديو']]:[]),['p','🧪 جرّب'],['q','❓ اختبار'],['h','📝 واجب']];
+let h=`<button class="back" onclick="track('${id}')">→ ${t.t}</button><h2>${i+1}. ${esc(l.t)}</h2><div class="tabs">`+tabs.map(x=>`<button class="tab ${x[0]===tb?'on':''}" onclick="lesson('${id}',${i},'${x[0]}')">${x[1]}</button>`).join('')+'</div>';
+if(tb==='e'){h+=`<div class="box"><p>${l.intro}</p></div>`+l.s.map(s=>`<div class="box"><h3>${s.h}</h3>${s.p?'<p>'+s.p+'</p>':''}${s.c?'<pre class="c">'+esc(s.c)+'</pre>':''}</div>`).join('')+`<div class="tip">💡 ${l.tip}</div><div class="box" style="margin-top:12px"><button class="btn g" onclick="mark('${id}',${i})">✅ أنهيت الشرح</button><button class="btn" onclick="lesson('${id}',${i},'q')">اختبر نفسك ←</button></div>`}
+if(tb==='v'){h+='<div id="vbox">'+vids(t,0,l.t)+'</div>'}
+if(tb==='p'){const code=l.s.map(s=>s.c).filter(Boolean)[0]||'';
+ if(t.lang==='js'||t.lang==='html'){h+=`<div class="box"><p>${t.lang==='js'?'عدّل الكود واضغط تشغيل.':'عدّل الكود وشاهد الصفحة مباشرة.'}</p><textarea id="ed">${esc(code)}</textarea><button class="btn g" onclick="run('${t.lang}')">▶ تشغيل</button><button class="btn s" onclick="$('#ed').value=${JSON.stringify(code).replace(/</g,'\\u003c')}">↺ إعادة</button>${t.lang==='js'?'<div class="out" id="out"></div>':'<iframe class="pv" id="pv" sandbox="allow-scripts"></iframe>'}</div>`}
+ else{const oc={py:'python',cpp:'cpp',java:'java',cs:'csharp',php:'php',sql:'mysql',go:'go',rust:'rust',kt:'kotlin',dart:'dart',ts:'typescript'}[t.id];
+  h+=`<div class="box"><p>انسخ الكود وجرّبه وعدّل عليه. التشغيل يتم على موقع خارجي مجاني.</p><textarea id="ed">${esc(code)}</textarea><button class="btn s" onclick="cp()">📋 نسخ الكود</button>${oc?`<button class="btn g" onclick="location.href='https://onecompiler.com/${oc}'">▶ افتح المشغّل أونلاين</button>`:''}</div>`}}
+if(tb==='q'){h+='<div class="box" id="qz"></div>'}
+if(tb==='h'){const d=S.hw[key(id,i)];h+=`<div class="box"><h3>واجبك</h3><p>${l.hw}</p><label class="hw"><input type="checkbox" ${d?'checked':''} onchange="hw('${id}',${i},this.checked)"> خلصت الواجب</label></div>${i+1<t.L.length?`<button class="btn" onclick="lesson('${id}',${i+1})">الدرس التالي ←</button>`:`<button class="btn" onclick="track('${id}')">كل الدروس</button>`}`}
+app.innerHTML=h;scrollTo(0,0);if(tb==='q')quiz(id,i,0,0)}
+function cp(){const e=$('#ed');e.select();try{document.execCommand('copy');toast('تم النسخ')}catch(x){toast('حدد الكود وانسخه')}}
+function run(lang){const c=$('#ed').value;if(lang==='html'){$('#pv').srcdoc=c;add(2,'+2 تجربة');return}
+const o=$('#out');o.textContent='';const log=(...a)=>o.textContent+=a.map(x=>typeof x==='object'?JSON.stringify(x):x).join(' ')+'\n';
+try{new Function('console','document','alert',c)({log},{querySelector:()=>({addEventListener(){},style:{}})},m=>log('alert:',m))}catch(e){o.textContent='⚠️ خطأ: '+e.message}add(2,'+2 تجربة')}
+function mark(id,i){const k=key(id,i);if(!S.done[k]){S.done[k]=1;add(10,'+10 أحسنت');boom()}else toast('أنهيت الدرس من قبل')}
+function hw(id,i,v){const k=key(id,i);if(v&&!S.hw[k]){S.hw[k]=1;add(15,'+15 واجب مكتمل');boom()}save()}
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function quiz(id,i,n,sc){const l=TRACKS.find(x=>x.id===id).L[i],z=$('#qz');
+if(n>=l.q.length){const k=key(id,i),full=sc===l.q.length;if(full&&!S.q[k]){S.q[k]=1;add(20,'+20 نتيجة كاملة');boom()}
+z.innerHTML=`<h3>نتيجتك ${sc}/${l.q.length} ${full?'🏆':'💪'}</h3><button class="btn s" onclick="quiz('${id}',${i},0,0)">أعد المحاولة</button><button class="btn g" onclick="mark('${id}',${i});lesson('${id}',${i},'h')">للواجب ←</button>`;return}
+const q=l.q[n],o=shuf(q.o.map((x,j)=>[x,j===q.a]));z.innerHTML=`<b>سؤال ${n+1}/${l.q.length}</b><p>${q.q}</p>`+o.map((x,j)=>`<button class="opt" data-c="${x[1]?1:0}">${esc(x[0])}</button>`).join('');
+const bs=[...z.querySelectorAll('.opt')];bs.forEach(b=>b.onclick=()=>{bs.forEach(x=>x.disabled=true);
+if(b.dataset.c==='1'){b.classList.add('ok');setTimeout(()=>quiz(id,i,n+1,sc+1),900)}else{b.classList.add('no');bs.find(x=>x.dataset.c==='1').classList.add('ok');setTimeout(()=>quiz(id,i,n+1,sc),1500)}})}
+function progress(){nav('prog');let h=`<h2>تقدّمي</h2><p class="sec">كل ما أنجزته حتى الآن.</p><div class="stats"><div class="st"><b>${S.xp}</b><small>⭐ نقاط</small></div><div class="st"><b>${Math.floor(S.xp/100)+1}</b><small>🏆 مستوى</small></div><div class="st"><b>${S.streak}</b><small>🔥 أيام</small></div></div><div class="mini" style="height:10px"><i style="width:${S.xp%100}%;background:linear-gradient(90deg,var(--a),var(--a2))"></i></div><p class="small">${100-S.xp%100} نقطة للمستوى التالي · أنهيت ${totalDone()} من ${TOTAL} درسا</p>`;
+TRACKS.forEach(t=>{const p=Math.round(doneCount(t.id)/t.L.length*100);h+=`<div class="tr" onclick="track('${t.id}')"><div class="ic" style="background:${t.c}22">${t.e}</div><div style="flex:1"><b>${t.t}</b><small>${doneCount(t.id)}/${t.L.length} · ${p}%</small><div class="mini"><i style="width:${p}%;background:${t.c}"></i></div></div></div>`});
+h+='<button class="btn s" onclick="if(confirm(\'مسح كل التقدم؟\')){localStorage.removeItem(\'ck2\');location.reload()}">مسح التقدم</button>';app.innerHTML=h}
+
+function courseLock(id){const e=ENC.find(x=>x.id===id);app.innerHTML=`<button class="back" onclick="home()">→ رجوع</button><div class="box" style="text-align:center"><div style="font-size:54px">${e.e}</div><h2>${e.t}</h2><p>${id==='cyber'?'دورة دفاعية وتعليمية: المفاهيم، الشبكات، التشفير، أمان الويب، الحماية، القانون، ومنصات التدريب القانونية.':'دورة كوتلن الكاملة من الصفر للاحتراف مع أساسيات تطبيقات أندرويد.'}</p>
+<div class="tip" style="text-align:right">🔐 هذه الدورة تُفتح بكود خاص. اطلب الكود من صاحب التطبيق.</div>
+<button class="btn" onclick="location.href='https://wa.me/${WA}?text='+encodeURIComponent('أريد كود دورة ${e.t} في كود كيدز')">💬 اطلب الكود على واتساب</button>
+<h3 style="margin-top:18px">عندي كود</h3><input id="cyin" dir="ltr" placeholder="CK-XXXX-XXXX-XXXX" style="width:100%;padding:13px;border-radius:12px;border:1px solid var(--b);background:var(--s);color:var(--t);font-size:16px;text-align:center"><button class="btn g" onclick="courseOpen('${id}',$('#cyin').value,true)">فتح الدورة</button></div>`;scrollTo(0,0)}
+const b64=x=>Uint8Array.from(atob(x),c=>c.charCodeAt(0));
+async function courseOpen(id,code,ui){code=(code||'').trim().toUpperCase();if(!code)return;const e=ENC.find(x=>x.id===id);let f=window.ENCB&&window.ENCB[id],live=false;try{const r=await getJSON('enc-'+id+'.json');if(r&&r.w){f=r;live=true}}catch(x){}
+try{const kid=code.split('-')[1];const w=f.w[kid];if(!w)throw 0;
+const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(code),'PBKDF2',false,['deriveKey']);
+const wk=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b64(w.s),iterations:100000,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['decrypt']);
+const K=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(w.i)},wk,b64(w.d));
+const ck=await crypto.subtle.importKey('raw',K,'AES-GCM',false,['decrypt']);
+const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(f.i)},ck,b64(f.d));const P=JSON.parse(new TextDecoder().decode(pt));
+const i=TRACKS.findIndex(t=>t.id===id);const tr={id,t:e.t,e:e.e,c:e.c,d:e.d+' · مفتوحة',lang:null,full:true,v:P.v||[],L:P.L};if(i>=0)TRACKS[i]=tr;else TRACKS.push(tr);recount();S.cc[id]=code;save();
+if(ui){toast('تم فتح الدورة 🎉');boom();setTimeout(()=>track(id),700)}}
+catch(x){if(live&&S.cc[id]){delete S.cc[id];save();const i=TRACKS.findIndex(t=>t.id===id);if(i>=0)TRACKS.splice(i,1);recount();toast('انتهى هذا الكود')}if(ui)toast(live||f?'الكود غير صحيح':'تأكد من الإنترنت')}}
+function me(){nav('me');let h='<h2>حسابي</h2>';
+if(S.user){h+=`<div class="box" style="text-align:center">${S.user.picture?'<img src="'+esc(S.user.picture)+'" style="width:72px;height:72px;border-radius:50%">':'<div style="font-size:48px">👤</div>'}<h3 style="font-size:20px">${esc(S.user.name||'')}</h3><div class="small">${esc(S.user.email||'')}</div><button class="btn s" onclick="logout()">تسجيل الخروج</button></div>`}
+else h+=`<div class="box"><p>سجّل الدخول بحساب جوجل لحفظ اسمك وتقدمك على هذا الجهاز.</p><button class="g-btn" onclick="glogin()"><svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.5 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.5-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.100 0 24s.9 7.600 2.600 10.800l7.900-6.100z"/><path fill="#34A853" d="M24 48c6.500 0 11.900-2.100 15.900-5.800l-7.500-5.800c-2.100 1.400-4.800 2.300-8.400 2.300-6.300 0-11.600-4-13.500-9.800l-7.900 6.100C6.500 42.600 14.600 48 24 48z"/></svg>تسجيل الدخول بجوجل</button><p class="small" id="gmsg"></p></div>`;
+h+=`<div class="box"><h3>عن التطبيق</h3><p class="small">من تطوير وملكية: <b>عبدالرحمن محمود ومحمد عمرو</b> (Abdelrahman Mahmoud &amp; Mohamed Amr).</p><p class="small">كود كيدز v1.2. الشرح مكتوب بالعربية والكود بالإنجليزية. الفيديوهات تُعرض من قنوات أصحابها على يوتيوب بالمشغل الرسمي، ولا يتم نسخها أو رفعها.</p></div>`;app.innerHTML=h}
+function glogin(){const m=$('#gmsg');if(window.Native&&Native.login){m.textContent='جاري فتح جوجل...';Native.login()}else m.textContent='تسجيل الدخول يعمل داخل تطبيق الأندرويد فقط.'}
+function logout(){S.user=null;save();if(window.Native&&Native.logout)Native.logout();topbar();me()}
+window.onGoogleLogin=function(j){try{const u=typeof j==='string'?JSON.parse(j):j;if(u.error){const m=$('#gmsg');if(m)m.textContent='تعذر تسجيل الدخول: '+u.error;toast('تعذر تسجيل الدخول');return}S.user=u;save();topbar();toast('أهلا '+(u.name||''));boom();me()}catch(e){}}
+function boom(){const c=$('#cf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const P=[...Array(80)].map(()=>({x:innerWidth/2,y:innerHeight/2,vx:(Math.random()-.5)*14,vy:Math.random()*-14-3,c:['#f472b6','#fb923c','#fbbf24','#34d399','#a78bfa'][Math.floor(Math.random()*5)],s:5+Math.random()*6}));let f=0;(function a(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.45;x.fillStyle=p.c;x.fillRect(p.x,p.y,p.s,p.s)});if(++f<80)requestAnimationFrame(a);else x.clearRect(0,0,c.width,c.height)})()}
+streak();topbar();home();
+
+Object.keys(S.cc||{}).forEach(id=>courseOpen(id,S.cc[id],false));syncContent();
+</script></body></html>
