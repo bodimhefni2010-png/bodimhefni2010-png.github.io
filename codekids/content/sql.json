@@ -1496,6 +1496,1068 @@
    ],
    "vid": "7nq3k6iPnY0",
    "vby": "Elzero Web School"
+  },
+  {
+   "t": "ربط الجداول INNER JOIN",
+   "intro": "البيانات موزعة على جداول مرتبطة، والـ JOIN يجمع صفوفها المتطابقة في نتيجة واحدة. INNER JOIN هو النوع الأشهر: يعرض الصفوف التي لها مقابل في الجدولين فقط.",
+   "s": [
+    {
+     "h": "الصيغة",
+     "p": "نربط الجدولين بشرط ON يطابق المفتاح الأجنبي بالمفتاح الأساسي.",
+     "c": "SELECT customers.name, orders.total\nFROM orders\nINNER JOIN customers ON orders.customer_id = customers.id;"
+    },
+    {
+     "h": "الأسماء المستعارة للجداول",
+     "p": "نكتب اسماً قصيراً للجدول لنختصر الكود، ونستخدمه لتمييز الأعمدة المتشابهة مثل id.",
+     "c": "SELECT c.name, o.id AS order_id, o.total\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nORDER BY o.total DESC;"
+    },
+    {
+     "h": "JOIN مع التجميع",
+     "p": "يمكن ربط الجداول ثم تجميع النتيجة، مثل إجمالي مشتريات كل عميل.",
+     "c": "-- tables used in this lesson\nCREATE TABLE customers (id INTEGER PRIMARY KEY, name TEXT, city TEXT);\nCREATE TABLE orders (id INTEGER PRIMARY KEY, customer_id INTEGER, total REAL, created DATE);\n-- customers: (1,Ali,Cairo) (2,Sara,Giza) (3,Omar,Cairo) (4,Mona,Alex)\n-- orders: (1,1,100) (2,1,250) (3,2,80) (4,3,500) (5,NULL,40)\nSELECT c.name, SUM(o.total) AS spent\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name;"
+    }
+   ],
+   "tip": "اكتب شرط ON دائماً. نسيانه يسبب ضرب كل صف في كل صف (Cartesian product) وبيانات ضخمة خاطئة.",
+   "q": [
+    {
+     "q": "ماذا يعرض INNER JOIN؟",
+     "o": [
+      "الصفوف المتطابقة في الجدولين",
+      "كل صفوف الجدول الأول",
+      "الصفوف غير المتطابقة"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ما وظيفة ON؟",
+     "o": [
+      "تحديد شرط الربط",
+      "الترتيب",
+      "التجميع"
+     ],
+     "a": 0
+    },
+    {
+     "q": "لماذا نستخدم الأسماء المستعارة للجداول؟",
+     "o": [
+      "للاختصار وتمييز الأعمدة",
+      "لتسريع القاعدة",
+      "هو إلزامي"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "اربط جدولين من تصميمك (مدرسون وحصص) واعرض اسم المعلم مع عنوان كل حصة.",
+   "ex": [
+    {
+     "p": "اعرض اسم كل عميل مع إجمالي طلبه لكل طلب.",
+     "hint": "JOIN ... ON o.customer_id = c.id",
+     "sol": "SELECT c.name, o.total FROM customers c JOIN orders o ON o.customer_id = c.id;",
+     "why": "نربط كل طلب بالعميل الذي يملكه، والطلب بدون عميل (NULL) لا يظهر."
+    },
+    {
+     "p": "اعرض أسماء العملاء من Cairo مع تواريخ طلباتهم.",
+     "hint": "أضف WHERE بعد JOIN.",
+     "sol": "SELECT c.name, o.created FROM customers c JOIN orders o ON o.customer_id = c.id WHERE c.city = 'Cairo';",
+     "why": "بعد الربط نصفّي الصفوف بـ WHERE كالمعتاد."
+    }
+   ],
+   "vid": "UmmI7FJquRc",
+   "vby": "Elzero Web School"
+  },
+  {
+   "t": "LEFT JOIN وRIGHT JOIN وFULL JOIN",
+   "intro": "INNER JOIN يخفي الصفوف التي بلا مقابل. LEFT JOIN يحتفظ بكل صفوف الجدول الأيسر حتى لو لم يكن لها مقابل، ويضع NULL مكان الغائب.",
+   "s": [
+    {
+     "h": "LEFT JOIN",
+     "p": "نعرض كل العملاء حتى الذين لم يطلبوا شيئاً.",
+     "c": "SELECT c.name, o.total\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id;"
+    },
+    {
+     "h": "إيجاد من ليس له مقابل",
+     "p": "نصفّي الصفوف التي صار فيها الجانب الأيمن NULL، فنعرف العملاء الذين لم يشتروا أبداً.",
+     "c": "SELECT c.name\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id\nWHERE o.id IS NULL;"
+    },
+    {
+     "h": "RIGHT وFULL",
+     "p": "RIGHT JOIN عكس LEFT. وFULL JOIN يحتفظ بالجانبين. ليست كل الأنظمة تدعمها (MySQL لا تدعم FULL، وSQLite القديمة لا تدعم RIGHT). يمكن دائماً قلب ترتيب الجدولين واستخدام LEFT.",
+     "c": "-- Same result as RIGHT JOIN, by swapping tables:\nSELECT c.name, o.total\nFROM orders o\nLEFT JOIN customers c ON o.customer_id = c.id;"
+    }
+   ],
+   "tip": "إذا ظهرت NULL في نتيجة LEFT JOIN فهذا يعني: لا يوجد مقابل في الجدول الأيمن. هذه طريقة قوية لإيجاد البيانات الناقصة.",
+   "q": [
+    {
+     "q": "ماذا يحتفظ به LEFT JOIN؟",
+     "o": [
+      "كل صفوف الجدول الأيسر",
+      "الصفوف المتطابقة فقط",
+      "كل شيء دائماً"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ماذا يوضع مكان الصفوف بلا مقابل؟",
+     "o": [
+      "NULL",
+      "صفر",
+      "نص فارغ"
+     ],
+     "a": 0
+    },
+    {
+     "q": "كيف نجد العملاء بلا طلبات؟",
+     "o": [
+      "LEFT JOIN مع WHERE o.id IS NULL",
+      "INNER JOIN",
+      "ORDER BY"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "اشرح الفرق بين INNER JOIN وLEFT JOIN بمثال من تصميمك.",
+   "ex": [
+    {
+     "p": "اعرض كل العملاء وعدد طلبات كل منهم (بما فيهم من ليس له طلبات).",
+     "hint": "LEFT JOIN مع COUNT(o.id)",
+     "sol": "SELECT c.name, COUNT(o.id) AS orders_count FROM customers c LEFT JOIN orders o ON o.customer_id = c.id GROUP BY c.id, c.name;",
+     "why": "COUNT(o.id) تتجاهل NULL فتعطي صفراً للعميل بلا طلبات."
+    },
+    {
+     "p": "اعرض الطلبات التي ليس لها عميل.",
+     "hint": "اجعل orders على اليسار وWHERE c.id IS NULL",
+     "sol": "SELECT o.id, o.total FROM orders o LEFT JOIN customers c ON o.customer_id = c.id WHERE c.id IS NULL;",
+     "why": "الطلب رقم 5 بدون عميل فيظهر هنا."
+    }
+   ],
+   "vid": "qoNLQxqNkVo",
+   "vby": "Elzero Web School"
+  },
+  {
+   "t": "الربط الذاتي وCROSS JOIN",
+   "intro": "أحياناً نربط الجدول بنفسه، مثل جدول موظفين فيه عمود manager_id يشير إلى موظف آخر. وCROSS JOIN يضرب كل صف في كل صف عمداً.",
+   "s": [
+    {
+     "h": "الربط الذاتي",
+     "p": "نعطي الجدول اسمين مستعارين مختلفين ونعامله كجدولين.",
+     "c": "CREATE TABLE staff (id INTEGER PRIMARY KEY, name TEXT, manager_id INTEGER);\nINSERT INTO staff VALUES (1,'Boss',NULL),(2,'Ali',1),(3,'Sara',1),(4,'Omar',2);\n\nSELECT e.name AS employee, m.name AS manager\nFROM staff e\nLEFT JOIN staff m ON e.manager_id = m.id;"
+    },
+    {
+     "h": "CROSS JOIN",
+     "p": "ينتج كل التركيبات الممكنة بين جدولين. مفيد لتوليد قوائم مثل كل المقاسات مع كل الألوان.",
+     "c": "CREATE TABLE sizes (s TEXT);\nCREATE TABLE colors (c TEXT);\nINSERT INTO sizes VALUES ('S'),('M');\nINSERT INTO colors VALUES ('red'),('blue');\n\nSELECT s, c FROM sizes CROSS JOIN colors;"
+    },
+    {
+     "h": "انتبه للحجم",
+     "p": "إذا كان في الجدول الأول 1000 صف وفي الثاني 1000 فالنتيجة مليون صف. استعمل CROSS JOIN عن قصد فقط.",
+     "c": "SELECT COUNT(*) FROM sizes CROSS JOIN colors;"
+    }
+   ],
+   "tip": "في الربط الذاتي استخدم LEFT JOIN إذا أردت إظهار من ليس له مدير (مثل المدير العام).",
+   "q": [
+    {
+     "q": "لماذا نحتاج اسمين مستعارين في الربط الذاتي؟",
+     "o": [
+      "لنفرق بين نسختي الجدول",
+      "للسرعة",
+      "لا حاجة"
+     ],
+     "a": 0
+    },
+    {
+     "q": "كم صفاً ينتج CROSS JOIN بين 3 و4 صفوف؟",
+     "o": [
+      "12",
+      "7",
+      "3"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ما فائدة CROSS JOIN؟",
+     "o": [
+      "توليد كل التركيبات",
+      "حذف المكرر",
+      "ترتيب"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "صمم جدول أشخاص فيه parent_id واعرض كل شخص مع اسم أبيه.",
+   "ex": [
+    {
+     "p": "اعرض اسم كل موظف مع اسم مديره من جدول staff.",
+     "hint": "LEFT JOIN staff m ON e.manager_id = m.id",
+     "sol": "SELECT e.name, m.name AS manager FROM staff e LEFT JOIN staff m ON e.manager_id = m.id;",
+     "why": "نربط الجدول بنفسه: manager_id لأحد الصفوف يساوي id لصف آخر."
+    },
+    {
+     "p": "اعرض عدد الموظفين تحت كل مدير.",
+     "hint": "جمّع بـ manager_id واحذف NULL.",
+     "sol": "SELECT manager_id, COUNT(*) AS team FROM staff WHERE manager_id IS NOT NULL GROUP BY manager_id;",
+     "why": "نعد الصفوف التي تشير لنفس المدير."
+    }
+   ]
+  },
+  {
+   "t": "الاستعلامات الفرعية Subqueries",
+   "intro": "الاستعلام الفرعي هو SELECT داخل SELECT. نستخدمه عندما تعتمد إجابة الاستعلام الأول على نتيجة استعلام آخر.",
+   "s": [
+    {
+     "h": "في WHERE",
+     "p": "نقارن بقيمة واحدة محسوبة. مثلاً المنتجات الأغلى من المتوسط.",
+     "c": "SELECT name, price\nFROM products\nWHERE price > (SELECT AVG(price) FROM products);"
+    },
+    {
+     "h": "مع IN",
+     "p": "الاستعلام الفرعي يعيد قائمة قيم نختبر الانتماء إليها.",
+     "c": "-- tables used in this lesson\nCREATE TABLE customers (id INTEGER PRIMARY KEY, name TEXT, city TEXT);\nCREATE TABLE orders (id INTEGER PRIMARY KEY, customer_id INTEGER, total REAL, created DATE);\n-- customers: (1,Ali,Cairo) (2,Sara,Giza) (3,Omar,Cairo) (4,Mona,Alex)\n-- orders: (1,1,100) (2,1,250) (3,2,80) (4,3,500) (5,NULL,40)\nSELECT name FROM customers\nWHERE id IN (SELECT customer_id FROM orders WHERE total > 200);"
+    },
+    {
+     "h": "في FROM وفي SELECT",
+     "p": "يمكن أن يكون الاستعلام الفرعي جدولاً مؤقتاً بالاسم المستعار، أو عموداً محسوباً لكل صف.",
+     "c": "SELECT t.category, t.n\nFROM (SELECT category, COUNT(*) AS n\n      FROM products GROUP BY category) t\nWHERE t.n > 1;"
+    }
+   ],
+   "tip": "الاستعلام الفرعي في WHERE بعد عامل مقارنة يجب أن يعيد قيمة واحدة فقط، وإلا يحدث خطأ.",
+   "q": [
+    {
+     "q": "ما الاستعلام الفرعي؟",
+     "o": [
+      "SELECT داخل استعلام آخر",
+      "جدول جديد",
+      "فهرس"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ماذا نستخدم عندما يعيد الفرعي عدة قيم؟",
+     "o": [
+      "IN",
+      "=",
+      "LIMIT"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ماذا يحدث لو أعاد الفرعي عدة قيم مع = ؟",
+     "o": [
+      "خطأ",
+      "يعمل",
+      "يتجاهل"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "اعرض الطلاب الذين درجتهم أعلى من متوسط الجميع.",
+   "ex": [
+    {
+     "p": "اعرض المنتجات التي سعرها أقل من متوسط الأسعار.",
+     "hint": "price < (SELECT AVG(price) ...)",
+     "sol": "SELECT name, price FROM products WHERE price < (SELECT AVG(price) FROM products);",
+     "why": "يحسب الفرعي المتوسط مرة واحدة ثم تقارن به كل الصفوف."
+    },
+    {
+     "p": "اعرض الطالب صاحب أعلى درجة بدون LIMIT.",
+     "hint": "= (SELECT MAX(grade) ...)",
+     "sol": "SELECT name, grade FROM students WHERE grade = (SELECT MAX(grade) FROM students);",
+     "why": "نبحث عن الصف الذي درجته تساوي أكبر درجة."
+    }
+   ]
+  },
+  {
+   "t": "EXISTS والاستعلامات المرتبطة",
+   "intro": "EXISTS تسأل: هل يوجد أي صف يحقق الشرط؟ وتعيد صحيحاً أو خطأ. وهي تستخدم غالباً مع استعلام فرعي مرتبط بالصف الخارجي.",
+   "s": [
+    {
+     "h": "EXISTS",
+     "p": "العملاء الذين لديهم طلب واحد على الأقل. لا يهم ما يعيده الفرعي بل وجود الصفوف.",
+     "c": "SELECT c.name\nFROM customers c\nWHERE EXISTS (\n  SELECT 1 FROM orders o\n  WHERE o.customer_id = c.id\n);"
+    },
+    {
+     "h": "NOT EXISTS",
+     "p": "العملاء الذين ليس لديهم أي طلب. وهي أكثر أماناً من NOT IN مع وجود NULL.",
+     "c": "SELECT c.name\nFROM customers c\nWHERE NOT EXISTS (\n  SELECT 1 FROM orders o\n  WHERE o.customer_id = c.id\n);"
+    },
+    {
+     "h": "الاستعلام المرتبط",
+     "p": "الفرعي هنا يشير إلى عمود من الاستعلام الخارجي (c.id)، فيُنفَّذ منطقياً لكل صف. أنظمة قواعد البيانات تحسّنه عادة.",
+     "c": "SELECT c.name,\n  (SELECT COUNT(*) FROM orders o WHERE o.customer_id = c.id) AS orders_count\nFROM customers c;"
+    }
+   ],
+   "tip": "NOT IN مع قائمة فيها NULL لا تعيد أي صف، لذلك فضّل NOT EXISTS عندما قد توجد قيم NULL.",
+   "q": [
+    {
+     "q": "ماذا تفعل EXISTS؟",
+     "o": [
+      "تتحقق من وجود صفوف",
+      "تعد الصفوف",
+      "تحذف الصفوف"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ما الاستعلام المرتبط؟",
+     "o": [
+      "فرعي يستخدم عموداً من الخارجي",
+      "فرعي بدون شروط",
+      "JOIN"
+     ],
+     "a": 0
+    },
+    {
+     "q": "أي معامل أكثر أماناً مع NULL؟",
+     "o": [
+      "NOT EXISTS",
+      "NOT IN",
+      "=="
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "اكتب استعلاماً يعرض الأقسام التي ليس فيها موظفون باستخدام NOT EXISTS (من تصميمك).",
+   "ex": [
+    {
+     "p": "اعرض العملاء الذين لديهم طلب بإجمالي أكبر من 200.",
+     "hint": "EXISTS مع total > 200",
+     "sol": "SELECT c.name FROM customers c WHERE EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id AND o.total > 200);",
+     "why": "يكفي وجود طلب واحد يحقق الشرط لكل عميل."
+    },
+    {
+     "p": "اعرض العملاء بلا طلبات باستخدام NOT EXISTS.",
+     "hint": "NOT EXISTS (SELECT 1 ...)",
+     "sol": "SELECT c.name FROM customers c WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id);",
+     "why": "لا يوجد صف مطابق في orders فتتحقق NOT EXISTS."
+    }
+   ]
+  },
+  {
+   "t": "دمج النتائج UNION وINTERSECT وEXCEPT",
+   "intro": "عمليات المجموعات تجمع نتائج استعلامين: UNION يضمّهما، INTERSECT يعيد المشترك، EXCEPT يعيد ما في الأول وليس في الثاني.",
+   "s": [
+    {
+     "h": "UNION وUNION ALL",
+     "p": "UNION يزيل المكرر، وUNION ALL يبقي كل شيء وهو أسرع. شرط: نفس عدد الأعمدة وأنواع متوافقة.",
+     "c": "SELECT name, city FROM students\nUNION\nSELECT name, 'n/a' FROM products;"
+    },
+    {
+     "h": "INTERSECT",
+     "p": "القيم الموجودة في النتيجتين معاً.",
+     "c": "SELECT city FROM students WHERE age > 20\nINTERSECT\nSELECT city FROM students WHERE grade > 80;"
+    },
+    {
+     "h": "EXCEPT",
+     "p": "ما في الاستعلام الأول فقط. (في Oracle اسمها MINUS).",
+     "c": "SELECT city FROM students\nEXCEPT\nSELECT city FROM students WHERE age < 21;"
+    }
+   ],
+   "tip": "استخدم UNION ALL إن كنت متأكداً أنه لا تكرار، لأن UNION تقوم بعمل إضافي لإزالة المكرر.",
+   "q": [
+    {
+     "q": "ما الفرق بين UNION وUNION ALL؟",
+     "o": [
+      "UNION تزيل المكرر",
+      "لا فرق",
+      "UNION أسرع"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ماذا يشترط في UNION؟",
+     "o": [
+      "نفس عدد الأعمدة",
+      "نفس الجدول",
+      "نفس الأسماء فقط"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ماذا تعيد EXCEPT؟",
+     "o": [
+      "ما في الأول وليس في الثاني",
+      "المشترك",
+      "الكل"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "اعرض كل المدن المذكورة في جدولين مختلفين بدون تكرار.",
+   "ex": [
+    {
+     "p": "اعرض كل الأسماء من students ومن products معاً في عمود واحد باسم name.",
+     "hint": "UNION ALL",
+     "sol": "SELECT name FROM students UNION ALL SELECT name FROM products;",
+     "why": "نضم نتيجتين لهما عمود واحد من نفس النوع."
+    },
+    {
+     "p": "اعرض المدن التي فيها طلاب لكن ليست Cairo باستخدام EXCEPT.",
+     "hint": "SELECT city ... EXCEPT SELECT 'Cairo'",
+     "sol": "SELECT city FROM students EXCEPT SELECT 'Cairo';",
+     "why": "EXCEPT تستبعد من الأول ما يظهر في الثاني."
+    }
+   ]
+  },
+  {
+   "t": "تعديل هيكل الجدول ALTER TABLE",
+   "intro": "بعد إنشاء الجدول قد نحتاج إضافة عمود أو إعادة تسميته أو حذفه. هذا ما يفعله ALTER TABLE دون فقد البيانات الموجودة.",
+   "s": [
+    {
+     "h": "إضافة عمود",
+     "p": "العمود الجديد يأخذ NULL أو القيمة الافتراضية للصفوف القديمة.",
+     "c": "ALTER TABLE students ADD COLUMN email TEXT;\nALTER TABLE students ADD COLUMN active INTEGER DEFAULT 1;"
+    },
+    {
+     "h": "إعادة التسمية والحذف",
+     "p": "RENAME للجدول أو العمود، وDROP COLUMN لحذف عمود. تفاصيل الصيغة تختلف قليلاً بين الأنظمة.",
+     "c": "ALTER TABLE students RENAME COLUMN city TO town;\nALTER TABLE students DROP COLUMN grade;\nALTER TABLE students RENAME TO pupils;"
+    },
+    {
+     "h": "تعديل النوع",
+     "p": "في MySQL: MODIFY COLUMN. وفي PostgreSQL: ALTER COLUMN ... TYPE. في SQLite ليس مدعوماً مباشرة. جرّب التغييرات على نسخة أولاً.",
+     "c": "-- MySQL\n-- ALTER TABLE products MODIFY COLUMN price DECIMAL(10,2);\n-- PostgreSQL\n-- ALTER TABLE products ALTER COLUMN price TYPE NUMERIC(10,2);"
+    }
+   ],
+   "tip": "حذف عمود يفقد بياناته نهائياً. خذ نسخة احتياطية قبل أي ALTER على جدول مهم.",
+   "q": [
+    {
+     "q": "ما وظيفة ALTER TABLE؟",
+     "o": [
+      "تعديل هيكل جدول موجود",
+      "حذف صفوف",
+      "إضافة صفوف"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ماذا تحمل الصفوف القديمة في عمود جديد؟",
+     "o": [
+      "NULL أو القيمة الافتراضية",
+      "تُحذف",
+      "خطأ"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ماذا يحدث عند DROP COLUMN؟",
+     "o": [
+      "تُفقد بيانات العمود",
+      "تُنقل",
+      "لا شيء"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "أضف إلى جدول products عموداً باسم rating ثم حدّث تقييم منتج واحد.",
+   "ex": [
+    {
+     "p": "أضف عمود phone من نوع TEXT إلى students.",
+     "hint": "ALTER TABLE ... ADD COLUMN",
+     "sol": "ALTER TABLE students ADD COLUMN phone TEXT;",
+     "why": "نضيف عموداً جديداً فيحصل كل الطلاب على NULL له."
+    },
+    {
+     "p": "أعد تسمية العمود stock في products إلى qty.",
+     "hint": "RENAME COLUMN a TO b",
+     "sol": "ALTER TABLE products RENAME COLUMN stock TO qty;",
+     "why": "RENAME COLUMN تغيّر الاسم دون المساس بالبيانات."
+    }
+   ],
+   "vid": "lt8kizMJ4dU",
+   "vby": "Elzero Web School"
+  },
+  {
+   "t": "حذف الجداول DROP والفرق بينها وبين TRUNCATE",
+   "intro": "حذف الجدول بكامله أمر بسيط لكنه نهائي. من المهم التفريق بين حذف الصفوف وإفراغ الجدول وحذف الجدول نفسه.",
+   "s": [
+    {
+     "h": "DROP TABLE",
+     "p": "يحذف الجدول وبياناته وهيكله. نستخدم IF EXISTS لتجنب الخطأ إن لم يوجد.",
+     "c": "DROP TABLE IF EXISTS temp_data;"
+    },
+    {
+     "h": "المقارنة",
+     "p": "DELETE يحذف صفوفاً (ويمكن التراجع عنه في معاملة)، TRUNCATE يفرغ الجدول بسرعة، DROP يحذف كل شيء. SQLite ليس فيها TRUNCATE وتستخدم DELETE FROM.",
+     "c": "DELETE FROM logs WHERE created < '2025-01-01';\nDELETE FROM logs;           -- SQLite empty table\n-- TRUNCATE TABLE logs;     -- MySQL / PostgreSQL"
+    },
+    {
+     "h": "الجداول المرتبطة",
+     "p": "لا يمكن حذف جدول يشير إليه مفتاح أجنبي من جدول آخر قبل حذف المرتبط أو إزالة القيد. احذف بالترتيب: الأبناء ثم الآباء.",
+     "c": "DROP TABLE IF EXISTS orders;\nDROP TABLE IF EXISTS customers;"
+    }
+   ],
+   "tip": "لا تشغل DROP على قاعدة الإنتاج إلا بعد التأكد من النسخ الاحتياطي وأنك متصل بالقاعدة الصحيحة.",
+   "q": [
+    {
+     "q": "أي أمر يحذف الجدول نفسه؟",
+     "o": [
+      "DROP TABLE",
+      "DELETE",
+      "UPDATE"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ماذا تفيد IF EXISTS؟",
+     "o": [
+      "تمنع الخطأ إن لم يوجد",
+      "تحذف أسرع",
+      "تنسخ"
+     ],
+     "a": 0
+    },
+    {
+     "q": "بأي ترتيب نحذف جداول مرتبطة؟",
+     "o": [
+      "الأبناء ثم الآباء",
+      "الآباء ثم الأبناء",
+      "أي ترتيب"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "اكتب سكربت ينشئ جدولاً مؤقتاً ثم يحذفه بأمان.",
+   "ex": [
+    {
+     "p": "احذف الجدول tmp إن كان موجوداً.",
+     "hint": "DROP TABLE IF EXISTS",
+     "sol": "DROP TABLE IF EXISTS tmp;",
+     "why": "IF EXISTS تجعل الأمر آمناً حتى لو لم يوجد الجدول."
+    },
+    {
+     "p": "احذف كل صفوف products دون حذف الجدول (بصيغة تعمل في SQLite).",
+     "hint": "DELETE FROM بدون WHERE",
+     "sol": "DELETE FROM products;",
+     "why": "DELETE بلا شرط تفرغ الجدول وتترك هيكله."
+    }
+   ]
+  },
+  {
+   "t": "الفهارس Indexes",
+   "intro": "الفهرس يشبه فهرس الكتاب: يساعد القاعدة على إيجاد الصفوف بسرعة بدل قراءة كل الجدول. هو أهم أدوات تحسين الأداء.",
+   "s": [
+    {
+     "h": "إنشاء فهرس",
+     "p": "ننشئ فهرساً على العمود الذي نبحث أو نربط أو نرتب به كثيراً.",
+     "c": "CREATE INDEX idx_students_city ON students(city);\nCREATE UNIQUE INDEX idx_users_email ON users(email);"
+    },
+    {
+     "h": "متى يفيد وما ثمنه",
+     "p": "يسرّع SELECT لكنه يبطّئ INSERT وUPDATE قليلاً ويستهلك مساحة. لا تفهرس كل شيء، فقط الأعمدة المستخدمة في WHERE وJOIN وORDER BY.",
+     "c": "SELECT * FROM students WHERE city = 'Cairo';  -- uses idx_students_city"
+    },
+    {
+     "h": "EXPLAIN",
+     "p": "نرى كيف ستنفذ القاعدة الاستعلام وهل استخدمت الفهرس. الأمر في SQLite: EXPLAIN QUERY PLAN، وفي MySQL وPostgreSQL: EXPLAIN.",
+     "c": "EXPLAIN QUERY PLAN\nSELECT * FROM students WHERE city = 'Cairo';"
+    }
+   ],
+   "tip": "المفتاح الأساسي وUNIQUE ينشئان فهرساً تلقائياً. أما المفتاح الأجنبي ففهرسته يدوياً غالباً مفيدة للربط السريع.",
+   "q": [
+    {
+     "q": "ما وظيفة الفهرس؟",
+     "o": [
+      "تسريع البحث",
+      "حفظ نسخة احتياطية",
+      "حذف المكرر"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ما ثمن كثرة الفهارس؟",
+     "o": [
+      "بطء الكتابة ومساحة أكبر",
+      "لا ثمن",
+      "توقف القراءة"
+     ],
+     "a": 0
+    },
+    {
+     "q": "أي أمر يعرض خطة التنفيذ؟",
+     "o": [
+      "EXPLAIN",
+      "SHOW",
+      "PLAN"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "اختر ثلاثة أعمدة من تصميمك تستحق الفهرسة وبرر السبب.",
+   "ex": [
+    {
+     "p": "أنشئ فهرساً باسم idx_products_category على عمود category في products.",
+     "hint": "CREATE INDEX name ON table(column)",
+     "sol": "CREATE INDEX idx_products_category ON products(category);",
+     "why": "الفهرس على category يسرّع البحث والتجميع حسب الفئة."
+    },
+    {
+     "p": "أنشئ فهرساً فريداً على الاسم في جدول students.",
+     "hint": "CREATE UNIQUE INDEX",
+     "sol": "CREATE UNIQUE INDEX idx_students_name ON students(name);",
+     "why": "الفهرس الفريد يسرّع البحث ويمنع تكرار الاسم."
+    }
+   ]
+  },
+  {
+   "t": "العروض Views",
+   "intro": "العرض (View) استعلام محفوظ باسم، نستخدمه كأنه جدول. يبسّط الاستعلامات المعقدة ويخفي أعمدة لا نريد إظهارها.",
+   "s": [
+    {
+     "h": "إنشاء عرض",
+     "p": "نحفظ SELECT معقداً ونستدعيه باسمه.",
+     "c": "CREATE VIEW cairo_students AS\nSELECT id, name, grade\nFROM students\nWHERE city = 'Cairo';\n\nSELECT * FROM cairo_students;"
+    },
+    {
+     "h": "لماذا نستخدمه",
+     "p": "لتبسيط الكود، ولإخفاء بيانات حساسة (نعطي المستخدم العرض بدل الجدول)، ولتوحيد تعريف الحسابات في مكان واحد.",
+     "c": "CREATE VIEW product_summary AS\nSELECT category, COUNT(*) AS items, AVG(price) AS avg_price\nFROM products\nGROUP BY category;"
+    },
+    {
+     "h": "حذف وتعديل",
+     "p": "العرض لا يخزن بيانات (غالباً) بل يشغّل الاستعلام كل مرة. نحذفه بـ DROP VIEW.",
+     "c": "DROP VIEW IF EXISTS cairo_students;"
+    }
+   ],
+   "tip": "استخدم العروض لتبسيط التقارير المتكررة، وتذكر أنها لا تسرّع الاستعلام بحد ذاتها.",
+   "q": [
+    {
+     "q": "ماذا يخزن العرض؟",
+     "o": [
+      "استعلاماً محفوظاً",
+      "نسخة من البيانات دائماً",
+      "فهرساً"
+     ],
+     "a": 0
+    },
+    {
+     "q": "كيف نحذف عرضاً؟",
+     "o": [
+      "DROP VIEW",
+      "DELETE VIEW",
+      "REMOVE VIEW"
+     ],
+     "a": 0
+    },
+    {
+     "q": "من فوائد العرض؟",
+     "o": [
+      "إخفاء أعمدة وتبسيط الاستعلامات",
+      "تقليل حجم الجدول",
+      "منع الحذف"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "أنشئ عرضاً يعرض المنتجات المتوفرة فقط (stock > 0).",
+   "ex": [
+    {
+     "p": "أنشئ عرضاً in_stock يعرض اسم وسعر المنتجات التي مخزونها أكبر من صفر، ثم اختر منه.",
+     "hint": "CREATE VIEW ... AS SELECT",
+     "sol": "CREATE VIEW in_stock AS SELECT name, price FROM products WHERE stock > 0;\nSELECT * FROM in_stock;",
+     "why": "العرض يحفظ الاستعلام ونستخدمه كجدول."
+    },
+    {
+     "p": "أنشئ عرضاً يخفي درجة الطالب ويعرض id والاسم والمدينة فقط.",
+     "hint": "اختر الأعمدة المسموحة.",
+     "sol": "CREATE VIEW students_public AS SELECT id, name, city FROM students;",
+     "why": "العرض يعطي المستخدم الأعمدة المسموحة فقط."
+    }
+   ]
+  },
+  {
+   "t": "المعاملات Transactions",
+   "intro": "المعاملة مجموعة أوامر تُنفَّذ كوحدة واحدة: إما تنجح كلها أو تُلغى كلها. أساسية في الأمور المالية مثل تحويل المال بين حسابين.",
+   "s": [
+    {
+     "h": "المشكلة",
+     "p": "التحويل يتكون من خصم من حساب وإضافة لآخر. لو فشلت الخطوة الثانية بعد الأولى يضيع المال.",
+     "c": "CREATE TABLE wallet (id INTEGER PRIMARY KEY, owner TEXT, balance REAL);\nINSERT INTO wallet VALUES (1,'Ali',500),(2,'Sara',100);"
+    },
+    {
+     "h": "BEGIN وCOMMIT وROLLBACK",
+     "p": "BEGIN تبدأ المعاملة، COMMIT تثبّت التغييرات، ROLLBACK تتراجع عنها كلها.",
+     "c": "BEGIN;\nUPDATE wallet SET balance = balance - 200 WHERE id = 1;\nUPDATE wallet SET balance = balance + 200 WHERE id = 2;\nCOMMIT;"
+    },
+    {
+     "h": "خصائص ACID",
+     "p": "Atomicity (الكل أو لا شيء)، Consistency (البيانات سليمة)، Isolation (المعاملات لا تتداخل)، Durability (بعد COMMIT لا يضيع التغيير).",
+     "c": "BEGIN;\nDELETE FROM wallet WHERE id = 2;\nROLLBACK;   -- undone, Sara is back"
+    }
+   ],
+   "tip": "كل عمليات تغيير أكثر من جدول معاً يجب أن تكون داخل معاملة واحدة.",
+   "q": [
+    {
+     "q": "ماذا يفعل ROLLBACK؟",
+     "o": [
+      "يلغي تغييرات المعاملة",
+      "يثبّتها",
+      "يحذف الجدول"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ما معنى Atomicity؟",
+     "o": [
+      "الكل أو لا شيء",
+      "السرعة",
+      "التشفير"
+     ],
+     "a": 0
+    },
+    {
+     "q": "متى تثبت التغييرات؟",
+     "o": [
+      "عند COMMIT",
+      "عند BEGIN",
+      "عند SELECT"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "اكتب معاملة تحوّل 50 من حساب لآخر وتفحص أن الرصيد لا يصبح سالباً قبل التثبيت.",
+   "ex": [
+    {
+     "p": "اكتب معاملة تنقل 100 من المحفظة 1 إلى المحفظة 2.",
+     "hint": "BEGIN ... COMMIT",
+     "sol": "BEGIN;\nUPDATE wallet SET balance = balance - 100 WHERE id = 1;\nUPDATE wallet SET balance = balance + 100 WHERE id = 2;\nCOMMIT;",
+     "why": "الخصم والإضافة داخل معاملة واحدة تضمنان تنفيذهما معاً."
+    },
+    {
+     "p": "اكتب معاملة تحذف صفاً ثم تتراجع عنه.",
+     "hint": "ROLLBACK",
+     "sol": "BEGIN;\nDELETE FROM wallet WHERE id = 1;\nROLLBACK;",
+     "why": "ROLLBACK تعيد الحالة كما كانت قبل BEGIN."
+    }
+   ]
+  },
+  {
+   "t": "الاستعلامات المؤقتة CTE وWITH",
+   "intro": "CTE (Common Table Expression) تعطي استعلاماً فرعياً اسماً في بداية الاستعلام، فيصير الكود مقروءاً بدل الاستعلامات المتداخلة.",
+   "s": [
+    {
+     "h": "WITH",
+     "p": "نعرّف جدولاً مؤقتاً بالاسم ثم نستخدمه في الاستعلام الرئيسي.",
+     "c": "WITH per_city AS (\n  SELECT city, AVG(grade) AS avg_grade\n  FROM students\n  GROUP BY city\n)\nSELECT * FROM per_city WHERE avg_grade > 70;"
+    },
+    {
+     "h": "أكثر من CTE",
+     "p": "نفصل بينها بفاصلة ويمكن أن تستخدم السابقة.",
+     "c": "WITH expensive AS (\n  SELECT * FROM products WHERE price > 40\n), summary AS (\n  SELECT category, COUNT(*) AS n FROM expensive GROUP BY category\n)\nSELECT * FROM summary;"
+    },
+    {
+     "h": "CTE تكرارية",
+     "p": "تسمح بالتكرار، مثل توليد أرقام أو السير على شجرة. نكتب جزءاً أساسياً ثم جزءاً يستدعي نفسه.",
+     "c": "WITH RECURSIVE nums(n) AS (\n  SELECT 1\n  UNION ALL\n  SELECT n + 1 FROM nums WHERE n < 5\n)\nSELECT n FROM nums;"
+    }
+   ],
+   "tip": "CTE تحسّن القراءة، فاستخدمها بدل الاستعلامات الفرعية العميقة، لكن تذكر شرط التوقف في التكرارية.",
+   "q": [
+    {
+     "q": "ما فائدة CTE؟",
+     "o": [
+      "اسم لاستعلام مؤقت وقراءة أسهل",
+      "تسريع الشبكة",
+      "حذف البيانات"
+     ],
+     "a": 0
+    },
+    {
+     "q": "بأي كلمة تبدأ؟",
+     "o": [
+      "WITH",
+      "USING",
+      "LET"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ماذا يلزم في CTE التكرارية؟",
+     "o": [
+      "شرط توقف",
+      "فهرس",
+      "مفتاح أجنبي"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "أعد كتابة استعلام فرعي من الدروس السابقة باستخدام WITH.",
+   "ex": [
+    {
+     "p": "باستخدام WITH اعرض الفئات التي فيها أكثر من منتج.",
+     "hint": "CTE تحسب COUNT ثم WHERE n > 1",
+     "sol": "WITH c AS (SELECT category, COUNT(*) AS n FROM products GROUP BY category) SELECT category FROM c WHERE n > 1;",
+     "why": "CTE تحسب عدد كل فئة ثم نصفّي نتيجتها."
+    },
+    {
+     "p": "ولّد الأرقام من 1 إلى 10 بـ CTE تكرارية.",
+     "hint": "WITH RECURSIVE",
+     "sol": "WITH RECURSIVE t(n) AS (SELECT 1 UNION ALL SELECT n + 1 FROM t WHERE n < 10) SELECT n FROM t;",
+     "why": "الجزء الثاني يضيف 1 كل مرة حتى يتحقق شرط التوقف."
+    }
+   ]
+  },
+  {
+   "t": "دوال النوافذ Window Functions",
+   "intro": "دوال النوافذ تحسب قيمة لكل صف بالنظر إلى مجموعة صفوف مرتبطة، دون أن تدمج الصفوف كما يفعل GROUP BY. مثل ترتيب الطلاب أو المجموع المتراكم.",
+   "s": [
+    {
+     "h": "ROW_NUMBER وRANK",
+     "p": "نرتب الصفوف ونعطي كل صف رقماً. OVER تحدد طريقة التقسيم والترتيب. RANK يعطي نفس الرقم عند التساوي.",
+     "c": "SELECT name, grade,\n  RANK() OVER (ORDER BY grade DESC) AS pos\nFROM students\nWHERE grade IS NOT NULL;"
+    },
+    {
+     "h": "PARTITION BY",
+     "p": "تقسّم الصفوف إلى مجموعات والحساب يتم داخل كل مجموعة بشكل مستقل.",
+     "c": "SELECT name, city, grade,\n  ROW_NUMBER() OVER (PARTITION BY city ORDER BY grade DESC) AS rn\nFROM students\nWHERE grade IS NOT NULL;"
+    },
+    {
+     "h": "المجموع المتراكم وLAG",
+     "p": "SUM مع OVER ORDER BY يعطي مجموعاً تراكمياً. وLAG تجلب قيمة الصف السابق.",
+     "c": "SELECT id, price,\n  SUM(price) OVER (ORDER BY id) AS running_total,\n  LAG(price) OVER (ORDER BY id) AS prev_price\nFROM products;"
+    }
+   ],
+   "tip": "لإيجاد أعلى عنصر في كل مجموعة: رتب بـ ROW_NUMBER داخل PARTITION ثم اختر rn = 1 في استعلام خارجي.",
+   "q": [
+    {
+     "q": "ما الفرق بين GROUP BY ودوال النوافذ؟",
+     "o": [
+      "النوافذ تحتفظ بكل الصفوف",
+      "لا فرق",
+      "النوافذ تحذف الصفوف"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ماذا تفعل PARTITION BY؟",
+     "o": [
+      "تقسم الصفوف لمجموعات",
+      "ترتب فقط",
+      "تحذف"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ماذا تعيد LAG؟",
+     "o": [
+      "قيمة الصف السابق",
+      "الأكبر",
+      "العدد"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "اعرض ترتيب المنتجات داخل كل فئة حسب السعر.",
+   "ex": [
+    {
+     "p": "اعرض كل منتج مع رقم ترتيبه حسب السعر من الأغلى.",
+     "hint": "ROW_NUMBER() OVER (ORDER BY price DESC)",
+     "sol": "SELECT name, price, ROW_NUMBER() OVER (ORDER BY price DESC) AS rn FROM products;",
+     "why": "OVER تحدد ترتيب الصفوف ثم يُعطى كل صف رقمه."
+    },
+    {
+     "p": "اعرض أغلى منتج في كل فئة.",
+     "hint": "ROW_NUMBER داخل PARTITION BY category ثم rn = 1",
+     "sol": "SELECT name, category, price FROM (SELECT name, category, price, ROW_NUMBER() OVER (PARTITION BY category ORDER BY price DESC) AS rn FROM products) WHERE rn = 1;",
+     "why": "نرقّم داخل كل فئة ثم نأخذ الأول فقط."
+    }
+   ]
+  },
+  {
+   "t": "تصميم قاعدة البيانات والتطبيع",
+   "intro": "التصميم الجيد يمنع التكرار والأخطاء. التطبيع (Normalization) هو تقسيم البيانات إلى جداول مترابطة بحيث تُخزَّن كل معلومة في مكان واحد.",
+   "s": [
+    {
+     "h": "مشكلة الجدول الواحد الضخم",
+     "p": "لو خزّنت اسم العميل ومدينته في كل طلب، فتغيير المدينة يعني تعديل مئات الصفوف وقد تنسى بعضها.",
+     "c": "-- Bad: customer data repeated in every order\n-- orders(id, customer_name, customer_city, product, price)"
+    },
+    {
+     "h": "الأشكال الثلاثة",
+     "p": "الأول: قيمة واحدة في كل خانة (لا قوائم). الثاني: كل عمود يعتمد على كل المفتاح. الثالث: لا اعتماد بين الأعمدة غير المفتاحية. الحل العملي: افصل العميل في جدوله واربطه بمفتاح.",
+     "c": "CREATE TABLE customers (id INTEGER PRIMARY KEY, name TEXT, city TEXT);\nCREATE TABLE products (id INTEGER PRIMARY KEY, name TEXT, price REAL);\nCREATE TABLE orders (\n  id INTEGER PRIMARY KEY,\n  customer_id INTEGER REFERENCES customers(id),\n  order_date DATE\n);\nCREATE TABLE order_items (\n  order_id INTEGER REFERENCES orders(id),\n  product_id INTEGER REFERENCES products(id),\n  qty INTEGER,\n  PRIMARY KEY (order_id, product_id)\n);"
+    },
+    {
+     "h": "متى نكسر التطبيع",
+     "p": "في التقارير الكبيرة قد نكرّر بعض البيانات عمداً (denormalization) لتسريع القراءة. لكن هذا قرار واعٍ وليس البداية.",
+     "c": "-- Example: store total on orders to avoid recomputing\n-- ALTER TABLE orders ADD COLUMN total REAL;"
+    }
+   ],
+   "tip": "ابدأ بتصميم مطبّع، ثم حسّن الأداء عند الحاجة فقط وبعد القياس.",
+   "q": [
+    {
+     "q": "ما هدف التطبيع؟",
+     "o": [
+      "منع التكرار وحماية البيانات",
+      "زيادة عدد الجداول فقط",
+      "تسريع الإنترنت"
+     ],
+     "a": 0
+    },
+    {
+     "q": "أين نضع بيانات العميل؟",
+     "o": [
+      "في جدول مستقل",
+      "في كل طلب",
+      "في عمود نصي"
+     ],
+     "a": 0
+    },
+    {
+     "q": "ما فائدة الجدول الوسيط order_items؟",
+     "o": [
+      "علاقة كثير إلى كثير بين الطلبات والمنتجات",
+      "حذف المنتجات",
+      "التشفير"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "صمم قاعدة بيانات لمكتبة: كتب ومؤلفون وأعضاء واستعارات، ثم ارسم العلاقات.",
+   "ex": [
+    {
+     "p": "أنشئ جدولي authors(id, name) وbooks(id, title, author_id) بمفتاح أجنبي.",
+     "hint": "REFERENCES authors(id)",
+     "sol": "CREATE TABLE authors (id INTEGER PRIMARY KEY, name TEXT);\nCREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT, author_id INTEGER REFERENCES authors(id));",
+     "why": "نخزن المؤلف مرة واحدة ونشير إليه من كل كتاب."
+    },
+    {
+     "p": "أنشئ جدول loans(member_id, book_id, loan_date) بمفتاح أساسي مركب من العضو والكتاب والتاريخ.",
+     "hint": "PRIMARY KEY (a, b, c)",
+     "sol": "CREATE TABLE loans (\n  member_id INTEGER,\n  book_id INTEGER,\n  loan_date DATE,\n  PRIMARY KEY (member_id, book_id, loan_date)\n);",
+     "why": "نسمح للعضو باستعارة نفس الكتاب في أيام مختلفة."
+    }
+   ]
+  },
+  {
+   "t": "الأمان وحقن SQL",
+   "intro": "حقن SQL (SQL Injection) ثغرة تحدث عندما نبني استعلاماً بدمج نص من المستخدم مباشرة. يمكن للمهاجم تغيير معنى الاستعلام. نتعلمها هنا لنحمي تطبيقاتنا فقط.",
+   "s": [
+    {
+     "h": "كيف تحدث الثغرة",
+     "p": "الكود الخاطئ يدمج مدخل المستخدم داخل النص. إدخال يحتوي علامات اقتباس وأوامر قد يغير الاستعلام بالكامل.",
+     "c": "# BAD: building SQL from user input\nquery = \"SELECT * FROM users WHERE name = '\" + user_input + \"'\"\n# the input can change the meaning of the query"
+    },
+    {
+     "h": "الحل: الاستعلامات المهيأة",
+     "p": "نرسل الاستعلام بعلامات مكان (?) ثم القيم منفصلة، فيتعامل معها النظام كبيانات فقط وليس كأوامر.",
+     "c": "import sqlite3\ndb = sqlite3.connect(':memory:')\ndb.execute('CREATE TABLE users (name TEXT)')\ndb.execute('INSERT INTO users VALUES (?)', ('Ali',))\nrows = db.execute('SELECT * FROM users WHERE name = ?', (user_input,)).fetchall()"
+    },
+    {
+     "h": "طبقات حماية أخرى",
+     "p": "استخدم حساب قاعدة بيانات بأقل صلاحيات (قراءة فقط عند الحاجة)، وتحقق من المدخلات، ولا تعرض رسائل أخطاء القاعدة للمستخدم، ولا تخزن كلمات المرور نصاً عادياً بل بـ hash قوي مع salt.",
+     "c": "-- Least privilege example (MySQL)\n-- GRANT SELECT ON shop.* TO 'app_reader'@'localhost';"
+    }
+   ],
+   "tip": "القاعدة الذهبية: لا تدمج مدخلات المستخدم في نص SQL أبداً، استخدم دائماً معاملات (parameters).",
+   "q": [
+    {
+     "q": "ما الحل الأساسي لحقن SQL؟",
+     "o": [
+      "الاستعلامات المهيأة (parameters)",
+      "حذف علامات الاقتباس يدوياً",
+      "إخفاء الجدول"
+     ],
+     "a": 0
+    },
+    {
+     "q": "لماذا لا نعرض أخطاء القاعدة للمستخدم؟",
+     "o": [
+      "قد تكشف تفاصيل داخلية",
+      "لأنها طويلة",
+      "لأنها بالإنجليزية"
+     ],
+     "a": 0
+    },
+    {
+     "q": "كيف نخزن كلمات المرور؟",
+     "o": [
+      "hash قوي مع salt",
+      "نصاً عادياً",
+      "مشفرة بكلمة ثابتة"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "اكتب دالة تبحث عن مستخدم بالاسم باستخدام استعلام مهيأ في لغة تعرفها.",
+   "ex": [
+    {
+     "p": "اكتب بايثون تضيف مستخدماً إلى users(name) باستعلام مهيأ يمرر name بمعامل.",
+     "hint": "execute('...?', (name,))",
+     "sol": "import sqlite3\ndb = sqlite3.connect(':memory:')\ndb.execute('CREATE TABLE users (name TEXT)')\nname = \"Omar\"\ndb.execute('INSERT INTO users (name) VALUES (?)', (name,))\ndb.commit()",
+     "why": "علامة ? تأخذ القيمة من الـ tuple وتعاملها كبيانات فقط."
+    },
+    {
+     "p": "اكتب بايثون تبحث عن مستخدم باسم معين باستعلام مهيأ وتطبع النتيجة.",
+     "hint": "SELECT ... WHERE name = ?",
+     "sol": "import sqlite3\ndb = sqlite3.connect(':memory:')\ndb.execute('CREATE TABLE users (name TEXT)')\ndb.execute('INSERT INTO users VALUES (?)', ('Ali',))\nuser_input = \"Ali' OR '1'='1\"\nprint(db.execute('SELECT * FROM users WHERE name = ?', (user_input,)).fetchall())",
+     "why": "المدخل الخبيث يُعامل كنص عادي فلا يطابق أي مستخدم وتُطبع قائمة فارغة."
+    }
+   ]
+  },
+  {
+   "t": "مشروع ختامي: قاعدة بيانات متجر",
+   "intro": "نجمع كل ما تعلمناه في مشروع صغير: نصمم جداول متجر، نملؤها، ثم نكتب تقارير بالاستعلامات المتقدمة.",
+   "s": [
+    {
+     "h": "التصميم",
+     "p": "أربعة جداول: customers وproducts وorders وorder_items مع المفاتيح الأجنبية.",
+     "c": "CREATE TABLE customers (id INTEGER PRIMARY KEY, name TEXT NOT NULL, city TEXT);\nCREATE TABLE products (id INTEGER PRIMARY KEY, name TEXT NOT NULL, price REAL CHECK (price > 0));\nCREATE TABLE orders (id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(id), created DATE);\nCREATE TABLE order_items (\n  order_id INTEGER REFERENCES orders(id),\n  product_id INTEGER REFERENCES products(id),\n  qty INTEGER CHECK (qty > 0),\n  PRIMARY KEY (order_id, product_id)\n);"
+    },
+    {
+     "h": "البيانات التجريبية",
+     "p": "نضيف بيانات صغيرة لنجرب عليها التقارير.",
+     "c": "INSERT INTO customers VALUES (1,'Ali','Cairo'),(2,'Sara','Giza');\nINSERT INTO products VALUES (1,'Pen',2.5),(2,'Notebook',10),(3,'Mouse',150);\nINSERT INTO orders VALUES (1,1,'2026-03-01'),(2,2,'2026-03-02'),(3,1,'2026-03-05');\nINSERT INTO order_items VALUES (1,1,10),(1,2,2),(2,3,1),(3,2,5);"
+    },
+    {
+     "h": "تقرير المبيعات",
+     "p": "نربط أربعة جداول ونجمّع: إجمالي إنفاق كل عميل مرتباً من الأعلى.",
+     "c": "SELECT c.name,\n       SUM(oi.qty * p.price) AS spent\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nJOIN order_items oi ON oi.order_id = o.id\nJOIN products p ON p.id = oi.product_id\nGROUP BY c.id, c.name\nORDER BY spent DESC;"
+    }
+   ],
+   "tip": "جرّب أن تكتب تقارير إضافية بنفسك: أكثر منتج مبيعاً، وعدد الطلبات في كل يوم، والعملاء الذين لم يطلبوا.",
+   "q": [
+    {
+     "q": "كم جدولاً ربطنا في تقرير المبيعات؟",
+     "o": [
+      "4",
+      "2",
+      "1"
+     ],
+     "a": 0
+    },
+    {
+     "q": "لماذا order_items جدول منفصل؟",
+     "o": [
+      "الطلب يحتوي منتجات كثيرة",
+      "للتزيين",
+      "لتقليل الأعمدة فقط"
+     ],
+     "a": 0
+    },
+    {
+     "q": "أي جملة تضع الترتيب من الأعلى إنفاقاً؟",
+     "o": [
+      "ORDER BY spent DESC",
+      "GROUP BY spent",
+      "WHERE spent"
+     ],
+     "a": 0
+    }
+   ],
+   "hw": "اكتب استعلاماً يعرض اسم أكثر منتج مبيعاً (بمجموع الكمية).",
+   "ex": [
+    {
+     "p": "اعرض اسم كل منتج وإجمالي الكمية المباعة منه مرتباً تنازلياً.",
+     "hint": "JOIN order_items وGROUP BY",
+     "sol": "SELECT p.name, SUM(oi.qty) AS sold FROM products p JOIN order_items oi ON oi.product_id = p.id GROUP BY p.id, p.name ORDER BY sold DESC;",
+     "why": "نربط المنتج بتفاصيل الطلبات ونجمع الكميات لكل منتج."
+    },
+    {
+     "p": "اعرض المنتجات التي لم تُطلب أبداً.",
+     "hint": "LEFT JOIN مع IS NULL",
+     "sol": "SELECT p.name FROM products p LEFT JOIN order_items oi ON oi.product_id = p.id WHERE oi.order_id IS NULL;",
+     "why": "المنتج بلا صفوف في order_items يعطي NULL في الجانب الأيمن."
+    }
+   ]
   }
  ]
 }
