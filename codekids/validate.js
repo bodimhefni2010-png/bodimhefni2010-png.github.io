@@ -10,7 +10,8 @@ if(!l.tip)w('missing tip');
 if(!Array.isArray(l.q)||l.q.length<3)w('need >=3 quiz items q');
 (l.q||[]).forEach((q,j)=>{if(!q.q||!Array.isArray(q.o)||q.o.length<2||!Number.isInteger(q.a)||q.a<0||q.a>=q.o.length)w(`quiz ${j+1} invalid (q, o[], a index)`)});
 if(!l.hw)w('missing hw');
-if(l.vid!==undefined&&!/^[\w-]{11}$/.test(l.vid)&&!/^videos\//.test(l.vid))w('vid must be YouTube id or videos/ path');
+if(l.ex!==undefined){if(!Array.isArray(l.ex)||l.ex.length<2)w('ex needs >=2 exercises');else l.ex.forEach((e,j)=>{if(!e.p||!e.sol||!e.hint||e.sol.length<10)w(`exercise ${j+1} needs p, hint, sol`)})}
+if(l.vid!==undefined&&!/^[\w-]{11}$/.test(l.vid)&&true)w('vid must be an 11-char YouTube id');
 });
 const d=new Set();(x.L||[]).forEach(l=>{if(d.has(l.t))e.push('duplicate title '+l.t);d.add(l.t)});
 if(e.length){console.log('FAIL\n'+e.join('\n'));process.exit(1)}console.log('OK '+x.L.length+' lessons');
