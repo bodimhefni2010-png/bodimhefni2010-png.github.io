@@ -1,5 +1,5 @@
 (function(){
-if(window.__ckFeat)return;window.__ckFeat=1;try{var fx0=document.getElementById('fxs');if(fx0)fx0.textContent='✅ layer 2';
+if(window.__ckFeat)return;window.__ckFeat=1;try{var fx0=document.getElementById('fxs');if(fx0)fx0.textContent='✅ layer 2';try{CRED.foot=CRED.foot.replace('⏳ layer','✅ layer 2')}catch(e){}try{if(!localStorage.getItem('ckLang')){LANG='ar';localStorage.setItem('ckLang','ar');document.documentElement.lang='ar';document.documentElement.dir='rtl';if(typeof trAll==='function')trAll()}}catch(e){}
 var AR=function(){return typeof LANG==='undefined'||LANG==='ar'||LANG===''};
 function T(a,e){return AR()?a:e}
 var st=document.createElement('style');st.textContent=
@@ -110,3 +110,4 @@ buildNav();
 if(document.querySelector('#n_home.on')||document.querySelector('.nav button.on')||true){window.nav('home')}
 var fx=document.getElementById('fxs');if(fx)fx.textContent='✅ layer 2';}catch(e){window.__ckFeat=0;var fx2=document.getElementById('fxs');if(fx2)fx2.textContent='❌ '+(e&&e.message||e);try{toast('FX '+(e&&e.message||e))}catch(_){}}
 })();
+/*CKEND*/
