@@ -1,5 +1,5 @@
 (function(){
-if(window.__ckFeat)return;window.__ckFeat=1;
+if(window.__ckFeat)return;window.__ckFeat=1;try{
 var AR=function(){return typeof LANG==='undefined'||LANG==='ar'||LANG===''};
 function T(a,e){return AR()?a:e}
 var st=document.createElement('style');st.textContent=
@@ -108,4 +108,5 @@ var nm=S.user&&S.user.name?S.user.name:'',msg='سؤال من تطبيق كود �
 /* ---------- boot ---------- */
 buildNav();
 if(document.querySelector('#n_home.on')||document.querySelector('.nav button.on')||true){window.nav('home')}
+var fx=document.getElementById('fxs');if(fx)fx.textContent='✅ layer 2';}catch(e){window.__ckFeat=0;var fx2=document.getElementById('fxs');if(fx2)fx2.textContent='❌ '+(e&&e.message||e);try{toast('FX '+(e&&e.message||e))}catch(_){}}
 })();
