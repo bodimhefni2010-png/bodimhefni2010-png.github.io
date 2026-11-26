@@ -1,5 +1,5 @@
 (function(){
-if(window.__ckFeat)return;window.__ckFeat=1;try{
+if(window.__ckFeat)return;window.__ckFeat=1;try{var fx0=document.getElementById('fxs');if(fx0)fx0.textContent='✅ layer 2';
 var AR=function(){return typeof LANG==='undefined'||LANG==='ar'||LANG===''};
 function T(a,e){return AR()?a:e}
 var st=document.createElement('style');st.textContent=
