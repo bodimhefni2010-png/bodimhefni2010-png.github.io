@@ -6,6 +6,7 @@ function col(i){return PAL[i%PAL.length]}
 window.home=function(){nav('home');var nl=nextLesson();
 var h='<div class="hd"><h1>🚀 '+(LANG==='ar'?'كود زون':'Code Zone')+'</h1><p>'+(LANG==='ar'?'تعلّم البرمجة بالمرح، خطوة بخطوة':'Learn programming with fun, step by step')+'</p><div class="stats"><div class="st"><b>'+S.xp+'</b><small>⭐ نقاط</small></div><div class="st"><b>'+(Math.floor(S.xp/100)+1)+'</b><small>🏆 مستوى</small></div><div class="st"><b>'+S.streak+'</b><small>🔥 أيام متتالية</small></div></div><div class="hbar"><i style="width:'+(totalDone()/Math.max(TOTAL,1)*100)+'%"></i></div></div>';
 h+='<button class="cta2" onclick="lesson(\''+nl[0]+'\','+nl[1]+')">▶ '+(totalDone()?'كمّل من حيث وقفت':'ابدأ الدرس الأول')+'</button>';
+var cy=ENC.filter(function(e){return !TRACKS.some(function(t){return t.id===e.id})})[0];if(cy)h+='<div onclick="courseLock(\''+cy.id+'\')" style="background:#0f172a;color:#fff;border-radius:18px;padding:12px 14px;margin:0 0 16px;font-weight:800;display:flex;gap:10px;align-items:center;box-shadow:0 4px 0 #0003"><span style="font-size:26px">'+cy.e+'</span><span style="flex:1">'+cy.t+' 🔒<small style="display:block;font-weight:400;opacity:.8">'+cy.d+'</small></span><span>←</span></div>';
 if(PATHS.length){h+='<h2>اختر مسارك 🧭</h2><p class="sec">كل مسار يجمع اللغات اللازمة لهدفك بترتيب مقترح.</p><div class="grid">';
 PATHS.forEach(function(x,i){h+='<div class="tc" style="background:linear-gradient(135deg,'+col(i)+','+col(i)+'bb)" onclick="pathPage(\''+x.id+'\')"><span class="e">'+x.e+'</span><b>'+x.t+'</b><small>'+x.tracks.length+' لغات</small></div>'});h+='</div>'}
 h+='<h2>اختر لغتك 💻</h2><p class="sec">كل لغة فيها دروس مفصلة وفيديوهات من أكثر من مدرس.</p><div class="grid">';
@@ -15,8 +16,9 @@ ENC.forEach(function(e){if(!TRACKS.some(function(t){return t.id===e.id})){h+='<d
 h+='</div><p class="small" style="text-align:center;margin-top:20px">'+((CRED&&CRED.foot)||CREDFOOT)+'</p>';
 app.innerHTML=h};
 
+try{['كود زون','كود كيدز'].forEach(function(k){I18[k]={en:'Code Zone',fr:'Code Zone',es:'Code Zone',it:'Code Zone',ru:'Code Zone'}})}catch(e){}
 var RP=[[/كود كيدز/g,'كود زون'],[/Code Kids/g,'Code Zone']];
-function rn(root){try{var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null);var n;while(n=w.nextNode()){var v=n.nodeValue;if(!/كود كيدز|Code Kids/.test(v))continue;if(n.parentNode&&n.parentNode.closest&&n.parentNode.closest('pre,code,textarea'))continue;RP.forEach(function(r){v=v.replace(r[0],r[1])});n.nodeValue=v}}catch(e){}
+function rn(root){try{var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null);var n;while(n=w.nextNode()){var v=n.nodeValue;if(!/كود كيدز|Code Kids/.test(v))continue;if(n.parentNode&&n.parentNode.closest&&n.parentNode.closest('pre,code,textarea'))continue;RP.forEach(function(r){v=v.replace(r[0],r[1])});if(n.__ar!==undefined)n.__ar=n.__ar.replace(/كود كيدز/g,'كود زون');n.nodeValue=v}}catch(e){}
 document.title='كود زون';}
 rn(document.body);
 new MutationObserver(function(){rn(document.body)}).observe(document.body,{childList:true,subtree:true,characterData:true});
