@@ -34,8 +34,9 @@ window.tab=function(k){buildNav();window.nav(k);scrollTo(0,0);if(k==='home')retu
 window.lessonsTab=function(){window.nav('les');var nl=nextLesson(),h='<h2>'+T('📚 كل الدروس','📚 All lessons')+'</h2><p class="sec">'+T('اختر لغة وابدأ من أول درس.','Pick a language and start from lesson 1.')+'</p>';
 h+='<button class="cta" style="width:100%;margin:6px 0 12px" onclick="lesson(\''+nl[0]+'\','+nl[1]+')">▶ '+(totalDone()?T('كمّل من حيث وقفت','Continue where you stopped'):T('ابدأ الدرس الأول','Start the first lesson'))+'</button>';
 h+='<input class="fx-in" id="fxs" placeholder="'+T('🔎 ابحث عن لغة','🔎 Search a language')+'" oninput="fxFilter(this.value)">';
-TRACKS.forEach(function(t){var p=Math.round(doneCount(t.id)/Math.max(t.L.length,1)*100);h+='<div class="tr fxt" data-n="'+esc((t.t+' '+t.id).toLowerCase())+'" onclick="track(\''+t.id+'\')"><div class="ic" style="background:'+t.c+'22;border:1px solid '+t.c+'66">'+t.e+'</div><div style="flex:1"><b>'+t.t+'</b><small>'+t.d+' · '+t.L.length+' '+T('دروس','lessons')+' · '+t.v.length+' '+T('فيديو','videos')+'</small><div class="mini"><i style="width:'+p+'%;background:'+t.c+'"></i></div></div></div>'});
-ENC.forEach(function(e){if(!TRACKS.some(function(t){return t.id===e.id}))h+='<div class="tr fxt" data-n="'+esc(e.t.toLowerCase())+'" onclick="courseLock(\''+e.id+'\')"><div class="ic" style="background:'+e.c+'22;border:1px solid '+e.c+'66">'+e.e+'</div><div style="flex:1"><b>'+e.t+' 🔒</b><small>'+e.d+' · '+e.lock+'</small></div></div>'});
+var encF=function(){ENC.forEach(function(e){if(!TRACKS.some(function(t){return t.id===e.id}))h+='<div class="tr fxt" data-n="'+esc(e.t.toLowerCase())+'" onclick="courseLock(\''+e.id+'\')"><div class="ic" style="background:'+e.c+'22;border:1px solid '+e.c+'66">'+e.e+'</div><div style="flex:1"><b>'+e.t+' 🔒</b><small>'+e.d+' · '+e.lock+'</small></div></div>'});};
+TRACKS.forEach(function(t){var p=Math.round(doneCount(t.id)/Math.max(t.L.length,1)*100);h+='<div class="tr fxt" data-n="'+esc((t.t+' '+t.id).toLowerCase())+'" onclick="track(\''+t.id+'\')"><div class="ic" style="background:'+t.c+'22;border:1px solid '+t.c+'66">'+t.e+'</div><div style="flex:1"><b>'+t.t+'</b><small>'+t.d+' · '+t.L.length+' '+T('دروس','lessons')+' · '+t.v.length+' '+T('فيديو','videos')+'</small><div class="mini"><i style="width:'+p+'%;background:'+t.c+'"></i></div></div></div>';if(t.id==='ts')encF()});
+
 app.innerHTML=h};
 window.fxFilter=function(v){v=(v||'').toLowerCase();document.querySelectorAll('.fxt').forEach(function(e){e.style.display=e.getAttribute('data-n').indexOf(v)>=0?'':'none'})};
 /* ---------- challenges ---------- */
@@ -110,4 +111,5 @@ buildNav();
 if(document.querySelector('#n_home.on')||document.querySelector('.nav button.on')||true){window.nav('home')}
 var fx=document.getElementById('fxs');if(fx)fx.textContent='✅ layer 2';}catch(e){window.__ckFeat=0;var fx2=document.getElementById('fxs');if(fx2)fx2.textContent='❌ '+(e&&e.message||e);try{toast('FX '+(e&&e.message||e))}catch(_){}}
 })();
+try{var _u=window.unlockTxt;if(_u&&!_u.__p){window.unlockTxt=function(){return String(_u.apply(this,arguments)).replace(/\b100 (EGP|جنيه مصري)/g,'200 $1')};window.unlockTxt.__p=1}}catch(e){}
 /*CKEND*/
